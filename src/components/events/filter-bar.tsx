@@ -1,31 +1,36 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
-import { Plus, Rss, Search, SlidersHorizontal, Ticket, X } from "lucide-react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { CalendarIcon, Search, SlidersHorizontal, X } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import type { EventQueryParams } from "@/lib/events"
 
 const ALL = "_all_"
 
-function formatDayOption(dayKey: string) {
-  if (dayKey === "unscheduled") {
-    return "Date TBD"
-  }
+function dateToKey(date: Date): string {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
+}
 
-  const [year, month, day] = dayKey.split("-").map(Number)
-  if (!year || !month || !day) {
-    return dayKey
-  }
+function keyToDate(key: string): Date | undefined {
+  const [year, month, day] = key.split("-").map(Number)
+  if (!year || !month || !day) return undefined
+  return new Date(year, month - 1, day)
+}
 
+function formatDayLabel(dayKey: string): string {
+  if (dayKey === "unscheduled") return "Date TBD"
+  const date = keyToDate(dayKey)
+  if (!date) return dayKey
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
     weekday: "short",
-  }).format(new Date(Date.UTC(year, month - 1, day)))
+  }).format(date)
 }
 
 function buildHref(q: string, day: string, location: string) {
@@ -49,6 +54,7 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
   const [day, setDay] = useState(query.day ?? "")
   const [location, setLocation] = useState(query.location ?? "")
   const [filterOpen, setFilterOpen] = useState(false)
+  const [dayPickerOpen, setDayPickerOpen] = useState(false)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const filterRef = useRef<HTMLDivElement>(null)
 
@@ -70,6 +76,19 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
     return () => document.removeEventListener("pointerdown", onPointerDown)
   }, [filterOpen])
 
+  const scheduledDayOptions = useMemo(
+    () => dayOptions.filter((d) => d !== "unscheduled"),
+    [dayOptions]
+  )
+  const hasUnscheduled = dayOptions.includes("unscheduled")
+  const enabledDatesSet = useMemo(() => new Set(scheduledDayOptions), [scheduledDayOptions])
+  const selectedDate = day && day !== "unscheduled" ? keyToDate(day) : undefined
+  const defaultMonth = useMemo(() => {
+    if (selectedDate) return selectedDate
+    if (scheduledDayOptions.length > 0) return keyToDate(scheduledDayOptions[0])
+    return undefined
+  }, [selectedDate, scheduledDayOptions])
+
   function navigate(q: string, d: string, loc: string) {
     router.push(buildHref(q, d, loc))
   }
@@ -80,9 +99,20 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
     debounceRef.current = setTimeout(() => navigate(value, day, location), 400)
   }
 
-  function handleDayChange(value: string) {
-    const resolved = value === ALL ? "" : value
+  function handleCalendarSelect(date: Date | undefined) {
+    const resolved = date ? dateToKey(date) : ""
     setDay(resolved)
+    setDayPickerOpen(false)
+    setFilterOpen(false)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    navigate(searchValue, resolved, location)
+  }
+
+  function handleUnscheduledSelect() {
+    const resolved = day === "unscheduled" ? "" : "unscheduled"
+    setDay(resolved)
+    setDayPickerOpen(false)
+    setFilterOpen(false)
     if (debounceRef.current) clearTimeout(debounceRef.current)
     navigate(searchValue, resolved, location)
   }
@@ -103,6 +133,33 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
 
   const hasActiveFilters = !!day || !!location
 
+  const dayCalendar = (
+    <div>
+      <Calendar
+        mode="single"
+        selected={selectedDate}
+        onSelect={handleCalendarSelect}
+        defaultMonth={defaultMonth}
+        disabled={(date) => !enabledDatesSet.has(dateToKey(date))}
+        showOutsideDays={false}
+      />
+      {hasUnscheduled && (
+        <div className="border-t px-3 pb-3 pt-2">
+          <button
+            type="button"
+            onClick={handleUnscheduledSelect}
+            className={`w-full rounded-md px-2 py-1.5 text-left text-sm transition-colors ${day === "unscheduled"
+                ? "bg-slate-900 text-white"
+                : "text-slate-600 hover:bg-slate-100"
+              }`}
+          >
+            Date TBD
+          </button>
+        </div>
+      )}
+    </div>
+  )
+
   return (
     <header className="sticky top-0 z-30 border-b border-slate-200/60 bg-[#f2f2f2]/95 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-8">
@@ -119,8 +176,52 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
           />
         </div>
 
-        {/* Filter dropdown */}
-        <div ref={filterRef} className="relative">
+        {/* Inline selects — md and above */}
+        <div className="hidden md:flex items-center gap-2">
+          <Popover open={dayPickerOpen} onOpenChange={setDayPickerOpen}>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                className={`flex h-9 items-center gap-2 rounded-lg border px-3 text-sm transition-colors ${day
+                    ? "border-slate-900 bg-slate-900 text-white"
+                    : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-700"
+                  }`}
+              >
+                <CalendarIcon className="h-3.5 w-3.5 shrink-0" />
+                {day ? formatDayLabel(day) : "All days"}
+              </button>
+            </PopoverTrigger>
+            <PopoverContent align="start" className="w-auto p-0">
+              {dayCalendar}
+            </PopoverContent>
+          </Popover>
+
+          <Select value={location || ALL} onValueChange={handleLocationChange}>
+            <SelectTrigger className="h-9 w-36 rounded-lg border-slate-200 bg-white text-sm">
+              <SelectValue placeholder="All locations" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={ALL}>All locations</SelectItem>
+              {locationOptions.map((loc) => (
+                <SelectItem key={loc} value={loc}>{loc}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-slate-400 transition-colors hover:text-slate-600"
+            >
+              <X className="h-3 w-3" />
+              Clear
+            </button>
+          )}
+        </div>
+
+        {/* Filter dropdown — sm only */}
+        <div ref={filterRef} className="relative md:hidden">
           <button
             type="button"
             onClick={() => setFilterOpen((v) => !v)}
@@ -137,17 +238,7 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
               <div className="space-y-3">
                 <div className="space-y-1.5">
                   <p className="text-xs font-medium text-slate-500">Day</p>
-                  <Select value={day || ALL} onValueChange={handleDayChange}>
-                    <SelectTrigger className="h-8 w-full rounded-lg border-slate-200 text-xs">
-                      <SelectValue placeholder="All days" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value={ALL}>All days</SelectItem>
-                      {dayOptions.map((d) => (
-                        <SelectItem key={d} value={d}>{formatDayOption(d)}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  {dayCalendar}
                 </div>
 
                 <div className="space-y-1.5">

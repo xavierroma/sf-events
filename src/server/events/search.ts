@@ -72,7 +72,7 @@ function mapEventRow(row: EventRow): EventListItem {
 
 function buildSearchFilters(input: EventSearchFiltersInput): SearchFilters {
   const values: unknown[] = []
-  const conditions: string[] = ["is_active = TRUE"]
+  const conditions: string[] = ["is_active = TRUE", "end_at > NOW()"]
 
   const normalizedQuery = normalizeQuery(input.q)
   let tsQueryIndex: number | null = null
