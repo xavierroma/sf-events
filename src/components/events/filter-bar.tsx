@@ -164,7 +164,7 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-background/95 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-8">
-        <h1 className="flex-1 text-xl font-bold tracking-tight text-foreground">Events</h1>
+        <h1 className="flex-1 text-xl font-bold tracking-tight text-foreground">Bay Area Events</h1>
 
         {/* Search input */}
         <div className="relative">
@@ -247,7 +247,7 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
                 <div className="space-y-1.5">
                   <p className="text-xs font-medium text-muted-foreground">Location</p>
                   <Select value={location || ALL} onValueChange={handleLocationChange}>
-                    <SelectTrigger className="h-8 w-full rounded-lg border-input text-xs">
+                    <SelectTrigger size="sm" className="w-full rounded-lg border-input text-xs">
                       <SelectValue placeholder="All locations" />
                     </SelectTrigger>
                     <SelectContent>
