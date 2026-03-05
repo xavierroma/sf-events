@@ -253,6 +253,42 @@ export async function readCacheStatus(): Promise<CacheStatus> {
   return getCacheStatus()
 }
 
+export async function getEventById(id: string): Promise<EventListItem | null> {
+  const rows = await dbQuery<EventRow>(
+    `
+      SELECT
+        id,
+        title,
+        cover_url,
+        start_at,
+        end_at,
+        timezone,
+        slug,
+        location_type,
+        city,
+        city_state,
+        latitude,
+        longitude,
+        hosts,
+        guest_count,
+        ticket_count,
+        source_geo,
+        source_place,
+        CASE WHEN raw_payload->'detail'->'event'->'geo_address_info'->>'mode' = 'shown'
+          THEN raw_payload->'detail'->'event'->'geo_address_info'->>'short_address'
+          ELSE NULL END AS short_address,
+        raw_payload->'detail'->'description_mirror' AS description_mirror
+      FROM events
+      WHERE id = $1
+      LIMIT 1
+    `,
+    [id],
+  )
+
+  const row = rows.rows[0]
+  return row ? mapEventRow(row) : null
+}
+
 export async function getEventFacets(filters: Pick<EventSearchFiltersInput, "q">): Promise<EventFacetsResult> {
   const search = buildSearchFilters({ q: filters.q })
 

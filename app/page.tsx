@@ -1,12 +1,70 @@
+import type { Metadata } from "next"
+
 import { ExplorerClient } from "@/components/events/explorer-client"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { normalizeDayFilter, normalizeLocationFilter, normalizeQuery, type EventQueryParams } from "@/lib/events"
-import { getEventFacets, getPaginatedEvents } from "@/server/events/search"
+import { formatEventDateTime, getLocationLabel, normalizeDayFilter, normalizeLocationFilter, normalizeQuery, type EventQueryParams } from "@/lib/events"
+import { getEventById, getEventFacets, getPaginatedEvents } from "@/server/events/search"
 
 const LIST_PAGE_SIZE = 24
 
 export const dynamic = "force-dynamic"
+
+const DEFAULT_TITLE = "SF Bay Area Events — All hidden events in a List"
+const DEFAULT_DESCRIPTION =
+  "Discover every Bay Area event on Luma without the map. Search and filter hundreds of hidden events, all in one place."
+
+export async function generateMetadata({ searchParams }: HomePageProps): Promise<Metadata> {
+  const params = await searchParams
+  const eventId = readFirst(params.event)
+
+  if (eventId) {
+    try {
+      const event = await getEventById(eventId)
+
+      if (event) {
+        const title = `${event.title} — SF Bay Area Events`
+        const parts: string[] = []
+        if (event.hosts.length > 0) {
+          parts.push(`By ${event.hosts.slice(0, 3).join(", ")}`)
+        }
+        const location = getLocationLabel(event)
+        if (location) parts.push(location)
+        const date = formatEventDateTime(event)
+        if (date) parts.push(date)
+        const description = parts.join(" · ")
+
+        const images = event.coverUrl
+          ? [{ url: event.coverUrl, width: 1280, height: 640, alt: event.title }]
+          : [{ url: "/sf.png", width: 1280, height: 640, alt: "SF Bay Area Events" }]
+
+        return {
+          title,
+          description,
+          openGraph: {
+            type: "website",
+            title,
+            description,
+            images,
+          },
+          twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: images.map((img) => img.url),
+          },
+        }
+      }
+    } catch {
+      // fall through to default metadata
+    }
+  }
+
+  return {
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+  }
+}
 
 type SearchParamsValue = string | string[] | undefined
 
