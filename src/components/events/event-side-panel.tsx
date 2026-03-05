@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { CalendarDays, ChevronUp, ChevronDown, Copy, ExternalLink, MapPin, Users, X } from "lucide-react"
+import { CalendarDays, ChevronUp, ChevronDown, Copy, ExternalLink, MapPin, User, X } from "lucide-react"
 
 import type { EventListItem } from "@/lib/events"
 import { getLocationLabel, toEventUrl } from "@/lib/events"
@@ -74,6 +74,63 @@ function copyToClipboard(text: string) {
   if (typeof navigator !== "undefined" && navigator.clipboard) {
     navigator.clipboard.writeText(text).catch(() => { })
   }
+}
+
+const AVATAR_COLORS = [
+  "bg-emerald-600 text-white",
+  "bg-violet-600 text-white",
+  "bg-amber-500 text-white",
+  "bg-sky-600 text-white",
+  "bg-rose-600 text-white",
+]
+
+function AttendanceRow({ event }: { event: EventListItem }) {
+  const count = event.guestCount ?? event.ticketCount ?? 0
+  const verb = event.guestCount !== null && event.guestCount > 0 ? "going" : "registered"
+
+  const combined = [
+    ...event.guestAvatars.map((url, i) => ({ name: event.guestNames[i] ?? "", avatarUrl: url })),
+    ...event.hosts.map((name, i) => ({ name, avatarUrl: event.hostAvatars[i] ?? "" })),
+  ].sort((a, b) => (b.avatarUrl ? 1 : 0) - (a.avatarUrl ? 1 : 0))
+  const entries = Array.from(new Map(combined.map((e) => [e.avatarUrl || e.name, e])).values())
+
+  const slots = Math.min(5, count)
+  const namedEntries = entries.filter((e) => e.name).slice(0, 2)
+  const rest = count - namedEntries.length
+  const label = namedEntries.length === 0
+    ? `${count} ${verb}`
+    : rest <= 0
+      ? `${namedEntries.map((e) => e.name).join(" & ")} ${verb}`
+      : `${namedEntries.map((e) => e.name).join(", ")} and ${rest} others`
+
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex -space-x-2">
+        {Array.from({ length: slots }).map((_, i) => {
+          const entry = entries[i]
+          return entry?.avatarUrl ? (
+            <img
+              key={i}
+              src={entry.avatarUrl}
+              alt={entry.name}
+              className="h-8 w-8 rounded-full border-2 border-card object-cover"
+            />
+          ) : (
+            <span
+              key={i}
+              className={cn(
+                "inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-card text-[11px] font-semibold",
+                AVATAR_COLORS[i % AVATAR_COLORS.length],
+              )}
+            >
+              {entry?.name ? hostInitials(entry.name) : <User className="h-3.5 w-3.5 opacity-60" />}
+            </span>
+          )
+        })}
+      </div>
+      <span className="text-sm text-muted-foreground">{label}</span>
+    </div>
+  )
 }
 
 interface PanelContentProps {
@@ -164,19 +221,29 @@ function PanelContent({ event, onClose }: PanelContentProps) {
             <h2 className="text-2xl font-bold leading-snug text-foreground">{event.title}</h2>
             <div className="flex items-center gap-2">
               <div className="flex shrink-0 -space-x-2">
-                {event.hosts.slice(0, 3).map((host, index) => (
-                  <span
-                    key={`${event.id}-${host}-${index}`}
-                    className={cn(
-                      "inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-background text-[10px] font-medium",
-                      index === 0 && "bg-emerald-100 text-emerald-800",
-                      index === 1 && "bg-amber-100 text-amber-800",
-                      index === 2 && "bg-sky-100 text-sky-800",
-                    )}
-                  >
-                    {hostInitials(host)}
-                  </span>
-                ))}
+                {event.hosts.slice(0, 3).map((host, index) => {
+                  const avatarUrl = event.hostAvatars[index]
+                  return avatarUrl ? (
+                    <img
+                      key={`${event.id}-${host}-${index}`}
+                      src={avatarUrl}
+                      alt={host}
+                      className="h-6 w-6 rounded-full border-2 border-background object-cover"
+                    />
+                  ) : (
+                    <span
+                      key={`${event.id}-${host}-${index}`}
+                      className={cn(
+                        "inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-background text-[10px] font-medium",
+                        index === 0 && "bg-emerald-100 text-emerald-800",
+                        index === 1 && "bg-amber-100 text-amber-800",
+                        index === 2 && "bg-sky-100 text-sky-800",
+                      )}
+                    >
+                      {hostInitials(host)}
+                    </span>
+                  )
+                })}
               </div>
               <span className="text-sm text-muted-foreground">{getHostLine(event.hosts)}</span>
             </div>
@@ -229,18 +296,7 @@ function PanelContent({ event, onClose }: PanelContentProps) {
 
           {/* Attendance */}
           {((event.guestCount !== null && event.guestCount > 0) || (event.ticketCount !== null && event.ticketCount > 0)) && (
-            <div className="rounded-xl border border-border bg-muted p-4">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Users className="h-4 w-4 text-muted-foreground" />
-                <span>
-                  {event.guestCount !== null && event.guestCount > 0
-                    ? `${event.guestCount} going`
-                    : event.ticketCount !== null && event.ticketCount > 0
-                      ? `${event.ticketCount} registered`
-                      : "Attendance info unavailable"}
-                </span>
-              </div>
-            </div>
+            <AttendanceRow event={event} />
           )}
 
           {/* About Event */}

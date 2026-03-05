@@ -21,6 +21,7 @@ type Nullable<T> = T | null | undefined
 interface RawHost {
   name?: Nullable<string>
   username?: Nullable<string>
+  avatar_url?: Nullable<string>
 }
 
 interface RawCoordinate {
@@ -86,6 +87,9 @@ function normalizeEntry(entry: RawDiscoverEntry, feed: FeedKind): PersistableEve
     hosts: hosts
       .map((h) => h.name?.trim() || h.username?.trim() || "")
       .filter((v): v is string => Boolean(v)),
+    hostAvatars: hosts.map((h) => h.avatar_url?.trim() ?? ""),
+    guestAvatars: [],
+    guestNames: [],
     guestCount: entry.guest_count ?? null,
     ticketCount: entry.ticket_count ?? null,
     sourceGeo: feed === "geo",
@@ -109,6 +113,9 @@ function mergeEvent(left: PersistableEvent, right: PersistableEvent): Persistabl
     latitude: right.latitude ?? left.latitude,
     longitude: right.longitude ?? left.longitude,
     hosts: Array.from(new Set([...left.hosts, ...right.hosts])),
+    hostAvatars: left.hostAvatars.length ? left.hostAvatars : right.hostAvatars,
+    guestAvatars: [],
+    guestNames: [],
     guestCount: right.guestCount ?? left.guestCount,
     ticketCount: right.ticketCount ?? left.ticketCount,
     sourceGeo: left.sourceGeo || right.sourceGeo,

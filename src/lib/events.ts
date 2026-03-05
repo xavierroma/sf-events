@@ -16,6 +16,9 @@ export interface EventListItem {
   latitude: number | null
   longitude: number | null
   hosts: string[]
+  hostAvatars: string[]
+  guestAvatars: string[]
+  guestNames: string[]
   guestCount: number | null
   ticketCount: number | null
   sourceGeo: boolean

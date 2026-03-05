@@ -26,6 +26,9 @@ interface EventRow {
   latitude: number | null
   longitude: number | null
   hosts: string[] | null
+  host_avatars: string[] | null
+  guest_avatars: string[] | null
+  guest_names: string[] | null
   guest_count: number | null
   ticket_count: number | null
   source_geo: boolean
@@ -61,6 +64,9 @@ function mapEventRow(row: EventRow): EventListItem {
     latitude: row.latitude,
     longitude: row.longitude,
     hosts: row.hosts ?? [],
+    hostAvatars: row.host_avatars ?? [],
+    guestAvatars: row.guest_avatars ?? [],
+    guestNames: row.guest_names ?? [],
     guestCount: row.guest_count,
     ticketCount: row.ticket_count,
     sourceGeo: row.source_geo,
@@ -171,6 +177,17 @@ export async function getPaginatedEvents(params: EventQueryParams, mode: SearchM
         latitude,
         longitude,
         hosts,
+        host_avatars,
+        ARRAY(
+          SELECT elem->>'avatar_url'
+          FROM jsonb_array_elements(COALESCE(raw_payload->'detail'->'featured_guests', '[]'::jsonb)) AS elem
+          WHERE elem->>'avatar_url' IS NOT NULL
+        ) AS guest_avatars,
+        ARRAY(
+          SELECT COALESCE(NULLIF(elem->>'name', ''), elem->>'username', '')
+          FROM jsonb_array_elements(COALESCE(raw_payload->'detail'->'featured_guests', '[]'::jsonb)) AS elem
+          WHERE elem->>'avatar_url' IS NOT NULL
+        ) AS guest_names,
         guest_count,
         ticket_count,
         source_geo,
@@ -229,6 +246,17 @@ export async function getMapEvents(
         latitude,
         longitude,
         hosts,
+        host_avatars,
+        ARRAY(
+          SELECT elem->>'avatar_url'
+          FROM jsonb_array_elements(COALESCE(raw_payload->'detail'->'featured_guests', '[]'::jsonb)) AS elem
+          WHERE elem->>'avatar_url' IS NOT NULL
+        ) AS guest_avatars,
+        ARRAY(
+          SELECT COALESCE(NULLIF(elem->>'name', ''), elem->>'username', '')
+          FROM jsonb_array_elements(COALESCE(raw_payload->'detail'->'featured_guests', '[]'::jsonb)) AS elem
+          WHERE elem->>'avatar_url' IS NOT NULL
+        ) AS guest_names,
         guest_count,
         ticket_count,
         source_geo,
@@ -270,6 +298,17 @@ export async function getEventById(id: string): Promise<EventListItem | null> {
         latitude,
         longitude,
         hosts,
+        host_avatars,
+        ARRAY(
+          SELECT elem->>'avatar_url'
+          FROM jsonb_array_elements(COALESCE(raw_payload->'detail'->'featured_guests', '[]'::jsonb)) AS elem
+          WHERE elem->>'avatar_url' IS NOT NULL
+        ) AS guest_avatars,
+        ARRAY(
+          SELECT COALESCE(NULLIF(elem->>'name', ''), elem->>'username', '')
+          FROM jsonb_array_elements(COALESCE(raw_payload->'detail'->'featured_guests', '[]'::jsonb)) AS elem
+          WHERE elem->>'avatar_url' IS NOT NULL
+        ) AS guest_names,
         guest_count,
         ticket_count,
         source_geo,
@@ -302,7 +341,7 @@ export async function getEventFacets(filters: Pick<EventSearchFiltersInput, "q">
         GROUP BY day
         ORDER BY day ASC
         LIMIT 45
-      `,
+  `,
       search.values,
     ),
     dbQuery<{ location: string | null }>(
@@ -314,7 +353,7 @@ export async function getEventFacets(filters: Pick<EventSearchFiltersInput, "q">
         GROUP BY location
         ORDER BY COUNT(*) DESC, location ASC
         LIMIT 80
-      `,
+  `,
       search.values,
     ),
   ])
