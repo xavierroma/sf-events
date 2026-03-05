@@ -22,6 +22,12 @@ function hostInitials(host: string) {
   return parts.map((part) => part[0]?.toUpperCase() ?? "").join("")
 }
 
+function isEventLive(event: EventListItem): boolean {
+  if (!event.startAt || !event.endAt) return false
+  const now = Date.now()
+  return now >= new Date(event.startAt).getTime() && now < new Date(event.endAt).getTime()
+}
+
 function formatTimelineTime(event: EventListItem) {
   if (!event.startAt) {
     return "TBD"
@@ -72,6 +78,15 @@ export function EventCard({ event }: { event: EventListItem }) {
     )}>
       <div className="min-w-0 space-y-1.5">
         <div className="flex items-center gap-2 text-sm text-slate-400">
+          {isEventLive(event) ? (
+            <span className="flex items-center gap-1.5 font-semibold text-orange-500">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-orange-500" />
+              </span>
+              LIVE
+            </span>
+          ) : null}
           <span>{formatTimelineTime(event)}</span>
         </div>
 

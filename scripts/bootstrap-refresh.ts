@@ -31,8 +31,8 @@ async function main() {
     throw new Error(`Bootstrap refresh failed (${response.status}): ${body}`)
   }
 
-  const payload = (await response.json()) as { runId?: string }
-  console.log(`Bootstrap refresh queued${payload.runId ? ` (run ${payload.runId})` : ""}`)
+  const payload = (await response.json()) as { runId?: string; totalUniqueEvents?: number }
+  console.log(`Bootstrap refresh complete${payload.runId ? ` (run ${payload.runId})` : ""}${payload.totalUniqueEvents !== undefined ? ` — ${payload.totalUniqueEvents} events` : ""}`)
 }
 
 main().catch((error: unknown) => {

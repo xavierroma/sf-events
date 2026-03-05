@@ -90,7 +90,7 @@ export async function beginRefreshGuard(runId: string) {
   })
 }
 
-export async function findExistingEventIds(ids: string[]): Promise<string[]> {
+export async function findEventIdsWithDetail(ids: string[]): Promise<string[]> {
   const uniqueIds = Array.from(new Set(ids))
   if (uniqueIds.length === 0) {
     return []
@@ -102,11 +102,33 @@ export async function findExistingEventIds(ids: string[]): Promise<string[]> {
         SELECT id
         FROM events
         WHERE id = ANY($1::text[])
+          AND raw_payload ? 'detail'
       `,
       [uniqueIds],
     )
 
     return result.rows.map((row) => row.id)
+  })
+}
+
+export async function findAllEventIds(): Promise<string[]> {
+  return withClient(async (client) => {
+    const result = await client.query<{ id: string }>(`SELECT id FROM events WHERE is_active = TRUE`)
+    return result.rows.map((row) => row.id)
+  })
+}
+
+export async function patchEventDetail(eventId: string, detail: unknown): Promise<void> {
+  await withClient(async (client) => {
+    await client.query(
+      `
+        UPDATE events
+        SET raw_payload = raw_payload || jsonb_build_object('detail', $2::jsonb),
+            updated_at = NOW()
+        WHERE id = $1
+      `,
+      [eventId, JSON.stringify(detail)],
+    )
   })
 }
 

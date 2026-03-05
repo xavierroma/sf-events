@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
-import { Plus, Rss, Search, SlidersHorizontal, X } from "lucide-react"
+import { Plus, Rss, Search, SlidersHorizontal, Ticket, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -105,7 +105,7 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
 
   return (
     <header className="sticky top-0 z-30 border-b border-slate-200/60 bg-[#f2f2f2]/95 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:px-8">
+      <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-8">
         <h1 className="flex-1 text-xl font-bold tracking-tight text-slate-900">Events</h1>
 
         {/* Search input */}

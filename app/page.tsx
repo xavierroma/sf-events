@@ -61,7 +61,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     const message = error instanceof Error ? error.message : "Unknown server error"
 
     return (
-      <main className="mx-auto flex min-h-screen max-w-2xl items-center px-6 py-10">
+      <main className="mx-auto flex min-h-screen max-w-4xl items-center px-6 py-10">
         <Card className="w-full border-rose-500/40 bg-rose-50/80">
           <CardHeader>
             <Badge className="w-fit bg-rose-700 text-rose-50">Data source unavailable</Badge>

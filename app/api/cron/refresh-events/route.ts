@@ -1,24 +1,18 @@
+import { waitUntil } from "@vercel/functions"
 import { NextResponse } from "next/server"
-import { start } from "workflow/api"
 
 import type { RefreshTrigger } from "@/lib/events"
 import { appConfig } from "@/lib/env"
-import { refreshEventsWorkflow } from "@/workflows/refresh-events"
+import { enrichMissingDetails, runRefresh } from "@/server/events/refresh"
 
 export const dynamic = "force-dynamic"
+export const maxDuration = 300
 
 function getBearerToken(request: Request) {
   const authorization = request.headers.get("authorization")
-
-  if (!authorization) {
-    return null
-  }
-
+  if (!authorization) return null
   const [scheme, token] = authorization.split(" ")
-  if (!scheme || !token || scheme.toLowerCase() !== "bearer") {
-    return null
-  }
-
+  if (!scheme || !token || scheme.toLowerCase() !== "bearer") return null
   return token
 }
 
@@ -40,19 +34,9 @@ export async function GET(request: Request) {
   const reasonParam = url.searchParams.get("reason")
   const reason: RefreshTrigger["reason"] = reasonParam === "bootstrap" ? "bootstrap" : "cron"
 
-  const trigger: RefreshTrigger = {
-    reason,
-    requestedAt: new Date().toISOString(),
-  }
+  const result = await runRefresh({ reason, requestedAt: new Date().toISOString() })
 
-  const run = await start(refreshEventsWorkflow, [trigger])
+  waitUntil(enrichMissingDetails().catch(() => { }))
 
-  return NextResponse.json(
-    {
-      queued: true,
-      runId: run.runId,
-      reason,
-    },
-    { status: 202 },
-  )
+  return NextResponse.json(result)
 }

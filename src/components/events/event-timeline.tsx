@@ -59,8 +59,8 @@ function formatTimelineDay(dayKey: string): { primary: string; secondary?: strin
   const targetDate = new Date(Date.UTC(year, month - 1, day))
   const dayDiff = todayDate ? Math.round((targetDate.getTime() - todayDate.getTime()) / 86_400_000) : null
 
-  const weekday = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(targetDate)
-  const monthDay = new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric" }).format(targetDate)
+  const weekday = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "UTC" }).format(targetDate)
+  const monthDay = new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", timeZone: "UTC" }).format(targetDate)
 
   if (dayDiff === 0) return { primary: "Today", secondary: weekday }
   if (dayDiff === 1) return { primary: "Tomorrow", secondary: weekday }

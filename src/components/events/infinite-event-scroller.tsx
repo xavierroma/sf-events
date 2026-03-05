@@ -112,7 +112,7 @@ export function InfiniteEventScroller({ initialResult, query }: InfiniteEventScr
 
   return (
     <EventPanelProvider allEvents={allEvents}>
-      <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-8">
+      <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-8">
         <div className="flex items-start gap-6">
           <section className="min-w-0 flex-1 space-y-5">
             <EventTimeline groups={groupedEvents} />
@@ -127,7 +127,7 @@ export function InfiniteEventScroller({ initialResult, query }: InfiniteEventScr
           </section>
 
           <aside
-            className="hidden w-[400px] shrink-0 lg:sticky lg:top-14 py-1.5 lg:block"
+            className="hidden w-[600px] shrink-0 lg:sticky lg:top-14 py-1.5 lg:block"
             style={{ height: "calc(100vh - 3.5rem)" }}
           >
             <EventInlineSidebar />
