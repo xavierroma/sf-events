@@ -164,7 +164,16 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-background/95 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-8">
-        <h1 className="flex-1 text-xl font-bold tracking-tight text-foreground">Bay Area Events</h1>
+        <h1 className="flex flex-1 items-center gap-2 text-xl font-bold tracking-tight text-foreground">
+          <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="h-full w-full">
+              <rect width="32" height="32" rx="7" fill="#0f172a" />
+              <path d="M5 11a1 1 0 0 1 1-1h20a1 1 0 0 1 1 1v2.5a2.5 2.5 0 0 0 0 5V21a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-2.5a2.5 2.5 0 0 0 0-5V11z" fill="white" />
+              <line x1="11" y1="10" x2="11" y2="22" stroke="#0f172a" strokeWidth="1.5" strokeDasharray="2 2" />
+            </svg>
+          </span>
+          Bay Area Events
+        </h1>
 
         {/* Search input */}
         <div className="relative">
