@@ -5,6 +5,7 @@ import type { RefreshResult, RefreshTrigger } from "@/lib/events"
 import {
   beginRefreshGuard,
   createCacheRun,
+  findExistingEventIds,
   markRunFailed,
   markRunSkipped,
   markRunSucceeded,
@@ -74,6 +75,57 @@ type StepWithRetries<TArgs extends unknown[], TResult> = ((...args: TArgs) => Pr
   maxRetries?: number
 }
 
+const MAX_RETRY_AFTER_MS = 15 * 60_000
+const BASE_PAGE_BACKOFF_MS = 10_000
+const BASE_DETAIL_BACKOFF_MS = 3_000
+
+function parseRetryAfterMs(headerValue: string | null): number | null {
+  if (!headerValue) {
+    return null
+  }
+
+  const asSeconds = Number(headerValue)
+  if (Number.isFinite(asSeconds) && asSeconds >= 0) {
+    return asSeconds * 1_000
+  }
+
+  const asDateMs = Date.parse(headerValue)
+  if (Number.isFinite(asDateMs)) {
+    return Math.max(0, asDateMs - Date.now())
+  }
+
+  return null
+}
+
+function buildExponentialBackoffMs(attempt: number, baseMs: number) {
+  const jitterMs = (attempt * 271) % 1_200
+  return Math.min(MAX_RETRY_AFTER_MS, 2 ** (attempt - 1) * baseMs + jitterMs)
+}
+
+function buildRetryAfterMs(response: Response, attempt: number, baseMs: number) {
+  const hintedRetryAfter = parseRetryAfterMs(response.headers.get("retry-after"))
+  if (hintedRetryAfter !== null) {
+    return Math.min(MAX_RETRY_AFTER_MS, Math.max(1_000, hintedRetryAfter))
+  }
+
+  return buildExponentialBackoffMs(attempt, baseMs)
+}
+
+function toRecord(value: unknown): Record<string, unknown> {
+  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+    return value as Record<string, unknown>
+  }
+
+  return { discover: value }
+}
+
+function withDetailPayload(rawPayload: unknown, detailPayload: unknown) {
+  return {
+    ...toRecord(rawPayload),
+    detail: detailPayload,
+  }
+}
+
 const fetchFeedPageStep: StepWithRetries<[FeedKind, string | null], FeedPageResult> = async (feed, cursor) => {
   "use step"
 
@@ -101,14 +153,18 @@ const fetchFeedPageStep: StepWithRetries<[FeedKind, string | null], FeedPageResu
   if (response.status === 403 || response.status === 429) {
     const metadata = getStepMetadata()
     const attempt = Math.max(1, metadata.attempt)
-    const retryAfterMs = Math.min(15 * 60_000, 2 ** (attempt - 1) * 10_000)
+    const retryAfterMs = buildRetryAfterMs(response, attempt, BASE_PAGE_BACKOFF_MS)
     throw new RetryableError(`Luma rate-limited ${feed} feed on page fetch`, {
       retryAfter: retryAfterMs,
     })
   }
 
   if (response.status >= 500) {
-    throw new RetryableError(`Luma ${feed} feed returned ${response.status}`)
+    const metadata = getStepMetadata()
+    const attempt = Math.max(1, metadata.attempt)
+    throw new RetryableError(`Luma ${feed} feed returned ${response.status}`, {
+      retryAfter: buildExponentialBackoffMs(attempt, BASE_PAGE_BACKOFF_MS),
+    })
   }
 
   if (!response.ok) {
@@ -124,6 +180,53 @@ const fetchFeedPageStep: StepWithRetries<[FeedKind, string | null], FeedPageResu
 }
 fetchFeedPageStep.maxRetries = 8
 
+const fetchEventDetailStep: StepWithRetries<[string], unknown | null> = async (eventId) => {
+  "use step"
+
+  const endpoint = new URL("/event/get", appConfig.luma.apiBase)
+  endpoint.searchParams.set("event_api_id", eventId)
+
+  const response = await fetch(endpoint.toString(), {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  })
+
+  if (response.status === 403 || response.status === 429) {
+    const metadata = getStepMetadata()
+    const attempt = Math.max(1, metadata.attempt)
+    throw new RetryableError(`Luma rate-limited event detail fetch for ${eventId}`, {
+      retryAfter: buildRetryAfterMs(response, attempt, BASE_DETAIL_BACKOFF_MS),
+    })
+  }
+
+  if (response.status >= 500) {
+    const metadata = getStepMetadata()
+    const attempt = Math.max(1, metadata.attempt)
+    throw new RetryableError(`Luma event detail fetch returned ${response.status} for ${eventId}`, {
+      retryAfter: buildExponentialBackoffMs(attempt, BASE_DETAIL_BACKOFF_MS),
+    })
+  }
+
+  if (response.status === 404) {
+    return null
+  }
+
+  if (!response.ok) {
+    throw new FatalError(`Luma event detail fetch returned non-retryable status ${response.status} for ${eventId}`)
+  }
+
+  return (await response.json()) as unknown
+}
+fetchEventDetailStep.maxRetries = 8
+
+const listExistingEventIdsStep: StepWithRetries<[string[]], string[]> = async (eventIds) => {
+  "use step"
+
+  return findExistingEventIds(eventIds)
+}
+
 const createCacheRunStep: StepWithRetries<[RefreshTrigger["reason"], string], string> = async (
   triggerReason,
   requestedAt,
@@ -136,10 +239,10 @@ const createCacheRunStep: StepWithRetries<[RefreshTrigger["reason"], string], st
 const beginRefreshGuardStep: StepWithRetries<[string], { acquired: boolean; reason: string | null }> = async (
   runId,
 ) => {
-    "use step"
+  "use step"
 
-    return beginRefreshGuard(runId)
-  }
+  return beginRefreshGuard(runId)
+}
 
 const persistSnapshotStep: StepWithRetries<[string, PersistableEvent[]], void> = async (runId, events) => {
   "use step"
@@ -197,8 +300,10 @@ function normalizeEntry(entry: RawDiscoverEntry, feed: FeedKind): PersistableEve
     sourceGeo: feed === "geo",
     sourcePlace: feed === "place",
     rawPayload: {
-      entry,
-      feed,
+      discover: {
+        entry,
+        feed,
+      },
     },
   }
 }
@@ -223,8 +328,10 @@ function mergeEvent(left: PersistableEvent, right: PersistableEvent): Persistabl
     sourceGeo: left.sourceGeo || right.sourceGeo,
     sourcePlace: left.sourcePlace || right.sourcePlace,
     rawPayload: {
-      left: left.rawPayload,
-      right: right.rawPayload,
+      discover: {
+        left: left.rawPayload,
+        right: right.rawPayload,
+      },
     },
   }
 }
@@ -232,6 +339,11 @@ function mergeEvent(left: PersistableEvent, right: PersistableEvent): Persistabl
 function getDeterministicDelayMs(pageNumber: number) {
   const jitterMs = (pageNumber * 173) % 900
   return appConfig.luma.pageDelayMs + jitterMs
+}
+
+function getDetailDelayMs(detailIndex: number) {
+  const jitterMs = (detailIndex * 97) % 600
+  return appConfig.luma.detailDelayMs + jitterMs
 }
 
 async function collectFeed(feed: FeedKind): Promise<CollectedFeed> {
@@ -287,6 +399,48 @@ function dedupeAndSort(geoEvents: PersistableEvent[], placeEvents: PersistableEv
   })
 }
 
+async function enrichNewEventsWithDetails(events: PersistableEvent[]) {
+  if (events.length === 0) {
+    return events
+  }
+
+  const existingIds = new Set(await listExistingEventIdsStep(events.map((event) => event.id)))
+  const newEvents = events.filter((event) => !existingIds.has(event.id))
+
+  if (newEvents.length === 0) {
+    return events
+  }
+
+  const detailsById = new Map<string, unknown>()
+
+  for (const [index, event] of newEvents.entries()) {
+    try {
+      const detailPayload = await fetchEventDetailStep(event.id)
+      if (detailPayload !== null) {
+        detailsById.set(event.id, detailPayload)
+      }
+    } catch {
+      // Preserve the snapshot refresh even if one detail request exhausts retries.
+    }
+
+    if (index < newEvents.length - 1) {
+      await sleep(getDetailDelayMs(index + 1))
+    }
+  }
+
+  return events.map((event) => {
+    const detailPayload = detailsById.get(event.id)
+    if (detailPayload === undefined) {
+      return event
+    }
+
+    return {
+      ...event,
+      rawPayload: withDetailPayload(event.rawPayload, detailPayload),
+    }
+  })
+}
+
 export async function refreshEventsWorkflow(trigger: RefreshTrigger): Promise<RefreshResult> {
   "use workflow"
 
@@ -309,15 +463,16 @@ export async function refreshEventsWorkflow(trigger: RefreshTrigger): Promise<Re
     const place = await collectFeed("place")
 
     const mergedEvents = dedupeAndSort(geo.events, place.events)
+    const enrichedEvents = await enrichNewEventsWithDetails(mergedEvents)
 
-    await persistSnapshotStep(runId, mergedEvents)
-    await markRunSucceededStep(runId, geo.pagesFetched, place.pagesFetched, mergedEvents.length)
+    await persistSnapshotStep(runId, enrichedEvents)
+    await markRunSucceededStep(runId, geo.pagesFetched, place.pagesFetched, enrichedEvents.length)
 
     return {
       runId,
       geoPages: geo.pagesFetched,
       placePages: place.pagesFetched,
-      totalUniqueEvents: mergedEvents.length,
+      totalUniqueEvents: enrichedEvents.length,
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown refresh workflow error"

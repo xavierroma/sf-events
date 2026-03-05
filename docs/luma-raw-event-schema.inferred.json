@@ -1,0 +1,1074 @@
+{
+  "generatedAt": "2026-03-04T21:46:00.000Z",
+  "source": "/discover/get-paginated-events",
+  "detailSource": "/event/get?event_api_id=<event_api_id>",
+  "sampled": {
+    "placePages": 2,
+    "geoPages": 4,
+    "placeEntries": 65,
+    "geoEntries": 182,
+    "totalEntries": 247
+  },
+  "cacheRawPayloadSchema": {
+    "types": [
+      "object"
+    ],
+    "properties": {
+      "discover": {
+        "types": [
+          "object"
+        ],
+        "description": "Always present. Normalized discover payload from /discover/get-paginated-events."
+      },
+      "detail": {
+        "types": [
+          "object"
+        ],
+        "description": "Optional. Included when a newly seen event is enriched via /event/get."
+      }
+    }
+  },
+  "entrySchema": {
+    "types": [
+      "object"
+    ],
+    "properties": {
+      "api_id": {
+        "types": [
+          "string"
+        ]
+      },
+      "calendar": {
+        "types": [
+          "object"
+        ],
+        "properties": {
+          "access_level": {
+            "types": [
+              "string"
+            ]
+          },
+          "api_id": {
+            "types": [
+              "string"
+            ]
+          },
+          "avatar_url": {
+            "types": [
+              "string"
+            ]
+          },
+          "coordinate": {
+            "types": [
+              "null",
+              "object"
+            ],
+            "properties": {
+              "latitude": {
+                "types": [
+                  "number"
+                ]
+              },
+              "longitude": {
+                "types": [
+                  "number"
+                ]
+              }
+            }
+          },
+          "cover_image_url": {
+            "types": [
+              "string"
+            ]
+          },
+          "description_short": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "event_submission_restriction": {
+            "types": [
+              "string"
+            ]
+          },
+          "geo_city": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "geo_country": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "geo_region": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "google_measurement_id": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "instagram_handle": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "is_blocked": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "is_personal": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "launch_status": {
+            "types": [
+              "string"
+            ]
+          },
+          "linkedin_handle": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "luma_plus_active": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "meta_pixel_id": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "name": {
+            "types": [
+              "string"
+            ]
+          },
+          "personal_user": {
+            "types": [
+              "null",
+              "object"
+            ],
+            "properties": {
+              "api_id": {
+                "types": [
+                  "string"
+                ]
+              },
+              "avatar_url": {
+                "types": [
+                  "string"
+                ]
+              },
+              "bio_short": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "instagram_handle": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "is_verified": {
+                "types": [
+                  "boolean"
+                ]
+              },
+              "last_online_at": {
+                "types": [
+                  "string"
+                ]
+              },
+              "linkedin_handle": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "name": {
+                "types": [
+                  "string"
+                ]
+              },
+              "tiktok_handle": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "timezone": {
+                "types": [
+                  "string"
+                ]
+              },
+              "twitter_handle": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "username": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "website": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "youtube_handle": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              }
+            }
+          },
+          "personal_user_api_id": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "refund_policy": {
+            "types": [
+              "null",
+              "object"
+            ],
+            "properties": {
+              "content": {
+                "types": [
+                  "array"
+                ],
+                "items": {
+                  "types": [
+                    "object"
+                  ],
+                  "properties": {
+                    "content": {
+                      "types": [
+                        "array"
+                      ],
+                      "items": {
+                        "types": [
+                          "object"
+                        ],
+                        "properties": {
+                          "text": {
+                            "types": [
+                              "string"
+                            ]
+                          },
+                          "type": {
+                            "types": [
+                              "string"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "type": {
+                      "types": [
+                        "string"
+                      ]
+                    }
+                  }
+                }
+              },
+              "type": {
+                "types": [
+                  "string"
+                ]
+              }
+            }
+          },
+          "slug": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "social_image_url": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "stripe_account_id": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "tax_config": {
+            "types": [
+              "null",
+              "object"
+            ],
+            "properties": {
+              "tax_name": {
+                "types": [
+                  "string"
+                ]
+              },
+              "tax_percent": {
+                "types": [
+                  "number"
+                ]
+              }
+            }
+          },
+          "tiktok_handle": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "timezone": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "tint_color": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "track_meta_ads_from_luma": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "twitter_handle": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "verified_at": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "website": {
+            "types": [
+              "null",
+              "string"
+            ]
+          },
+          "youtube_handle": {
+            "types": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "cover_image": {
+        "types": [
+          "object"
+        ],
+        "properties": {
+          "colors": {
+            "types": [
+              "array"
+            ],
+            "items": {
+              "types": [
+                "string"
+              ]
+            }
+          },
+          "palette": {
+            "types": [
+              "null",
+              "object"
+            ],
+            "properties": {
+              "neutral": {
+                "types": [
+                  "array"
+                ],
+                "items": {
+                  "types": [
+                    "object"
+                  ],
+                  "properties": {
+                    "color": {
+                      "types": [
+                        "string"
+                      ]
+                    },
+                    "percentage": {
+                      "types": [
+                        "number"
+                      ]
+                    }
+                  }
+                }
+              },
+              "vibrant": {
+                "types": [
+                  "array"
+                ],
+                "items": {
+                  "types": [
+                    "object"
+                  ],
+                  "properties": {
+                    "color": {
+                      "types": [
+                        "string"
+                      ]
+                    },
+                    "percentage": {
+                      "types": [
+                        "number"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "event": {
+        "types": [
+          "object"
+        ],
+        "properties": {
+          "api_id": {
+            "types": [
+              "string"
+            ]
+          },
+          "calendar_api_id": {
+            "types": [
+              "string"
+            ]
+          },
+          "coordinate": {
+            "types": [
+              "object"
+            ],
+            "properties": {
+              "latitude": {
+                "types": [
+                  "number"
+                ]
+              },
+              "longitude": {
+                "types": [
+                  "number"
+                ]
+              }
+            }
+          },
+          "cover_url": {
+            "types": [
+              "string"
+            ]
+          },
+          "end_at": {
+            "types": [
+              "string"
+            ]
+          },
+          "event_type": {
+            "types": [
+              "string"
+            ]
+          },
+          "geo_address_info": {
+            "types": [
+              "object"
+            ],
+            "properties": {
+              "address": {
+                "types": [
+                  "string"
+                ]
+              },
+              "apple_maps_place_id": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "city": {
+                "types": [
+                  "string"
+                ]
+              },
+              "city_state": {
+                "types": [
+                  "string"
+                ]
+              },
+              "country": {
+                "types": [
+                  "string"
+                ]
+              },
+              "country_code": {
+                "types": [
+                  "string"
+                ]
+              },
+              "description": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "full_address": {
+                "types": [
+                  "string"
+                ]
+              },
+              "localized": {
+                "types": [
+                  "null",
+                  "object"
+                ],
+                "properties": {
+                  "en-GB": {
+                    "types": [
+                      "object"
+                    ],
+                    "properties": {
+                      "address": {
+                        "types": [
+                          "string"
+                        ]
+                      },
+                      "city": {
+                        "types": [
+                          "string"
+                        ]
+                      },
+                      "city_state": {
+                        "types": [
+                          "string"
+                        ]
+                      },
+                      "country": {
+                        "types": [
+                          "string"
+                        ]
+                      },
+                      "full_address": {
+                        "types": [
+                          "string"
+                        ]
+                      },
+                      "region": {
+                        "types": [
+                          "string"
+                        ]
+                      },
+                      "short_address": {
+                        "types": [
+                          "string"
+                        ]
+                      },
+                      "sublocality": {
+                        "types": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "mode": {
+                "types": [
+                  "string"
+                ]
+              },
+              "place_id": {
+                "types": [
+                  "string"
+                ]
+              },
+              "region": {
+                "types": [
+                  "string"
+                ]
+              },
+              "short_address": {
+                "types": [
+                  "string"
+                ]
+              },
+              "sublocality": {
+                "types": [
+                  "null",
+                  "string"
+                ]
+              },
+              "type": {
+                "types": [
+                  "string"
+                ]
+              }
+            }
+          },
+          "geo_address_visibility": {
+            "types": [
+              "string"
+            ]
+          },
+          "hide_rsvp": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "location_type": {
+            "types": [
+              "string"
+            ]
+          },
+          "name": {
+            "types": [
+              "string"
+            ]
+          },
+          "one_to_one": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "recurrence_id": {
+            "types": [
+              "null"
+            ]
+          },
+          "show_guest_list": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "start_at": {
+            "types": [
+              "string"
+            ]
+          },
+          "timezone": {
+            "types": [
+              "string"
+            ]
+          },
+          "url": {
+            "types": [
+              "string"
+            ]
+          },
+          "user_api_id": {
+            "types": [
+              "string"
+            ]
+          },
+          "virtual_info": {
+            "types": [
+              "object"
+            ],
+            "properties": {
+              "has_access": {
+                "types": [
+                  "boolean"
+                ]
+              }
+            }
+          },
+          "visibility": {
+            "types": [
+              "string"
+            ]
+          },
+          "waitlist_enabled": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "waitlist_status": {
+            "types": [
+              "string"
+            ]
+          }
+        }
+      },
+      "featured_city": {
+        "types": [
+          "null",
+          "object"
+        ],
+        "properties": {
+          "api_id": {
+            "types": [
+              "string"
+            ]
+          },
+          "name": {
+            "types": [
+              "string"
+            ]
+          },
+          "slug": {
+            "types": [
+              "string"
+            ]
+          }
+        }
+      },
+      "featured_guests": {
+        "types": [
+          "array"
+        ],
+        "items": {
+          "types": [
+            "object"
+          ],
+          "properties": {
+            "api_id": {
+              "types": [
+                "string"
+              ]
+            },
+            "avatar_url": {
+              "types": [
+                "string"
+              ]
+            },
+            "bio_short": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "instagram_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "is_verified": {
+              "types": [
+                "boolean"
+              ]
+            },
+            "last_online_at": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "linkedin_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "name": {
+              "types": [
+                "string"
+              ]
+            },
+            "tiktok_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "timezone": {
+              "types": [
+                "string"
+              ]
+            },
+            "twitter_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "username": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "website": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "youtube_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        }
+      },
+      "guest_count": {
+        "types": [
+          "number"
+        ]
+      },
+      "hosts": {
+        "types": [
+          "array"
+        ],
+        "items": {
+          "types": [
+            "object"
+          ],
+          "properties": {
+            "api_id": {
+              "types": [
+                "string"
+              ]
+            },
+            "avatar_url": {
+              "types": [
+                "string"
+              ]
+            },
+            "bio_short": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "instagram_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "is_verified": {
+              "types": [
+                "boolean"
+              ]
+            },
+            "last_online_at": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "linkedin_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "name": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "tiktok_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "timezone": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "twitter_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "username": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "website": {
+              "types": [
+                "null",
+                "string"
+              ]
+            },
+            "youtube_handle": {
+              "types": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        }
+      },
+      "manage_access": {
+        "types": [
+          "null"
+        ]
+      },
+      "query_score": {
+        "types": [
+          "number"
+        ]
+      },
+      "role": {
+        "types": [
+          "null"
+        ]
+      },
+      "score": {
+        "types": [
+          "number"
+        ]
+      },
+      "start_at": {
+        "types": [
+          "string"
+        ]
+      },
+      "submitted_by_user_api_id": {
+        "types": [
+          "null",
+          "string"
+        ]
+      },
+      "ticket_count": {
+        "types": [
+          "number"
+        ]
+      },
+      "ticket_info": {
+        "types": [
+          "object"
+        ],
+        "properties": {
+          "currency_info": {
+            "types": [
+              "null",
+              "object"
+            ],
+            "properties": {
+              "currency": {
+                "types": [
+                  "string"
+                ]
+              },
+              "decimals": {
+                "types": [
+                  "number"
+                ]
+              }
+            }
+          },
+          "is_free": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "is_near_capacity": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "is_sold_out": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "max_price": {
+            "types": [
+              "null",
+              "object"
+            ],
+            "properties": {
+              "cents": {
+                "types": [
+                  "number"
+                ]
+              },
+              "currency": {
+                "types": [
+                  "string"
+                ]
+              }
+            }
+          },
+          "price": {
+            "types": [
+              "null",
+              "object"
+            ],
+            "properties": {
+              "cents": {
+                "types": [
+                  "number"
+                ]
+              },
+              "currency": {
+                "types": [
+                  "string"
+                ]
+              },
+              "is_flexible": {
+                "types": [
+                  "boolean"
+                ]
+              }
+            }
+          },
+          "require_approval": {
+            "types": [
+              "boolean"
+            ]
+          },
+          "spots_remaining": {
+            "types": [
+              "null",
+              "number"
+            ]
+          }
+        }
+      },
+      "waitlist_active": {
+        "types": [
+          "boolean"
+        ]
+      }
+    }
+  }
+}

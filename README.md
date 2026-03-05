@@ -23,6 +23,7 @@ Productionized explorer for SF events with a shared server cache.
   - geo feed (`latitude`, `longitude`)
   - place feed (`discover_place_api_id`)
 - Results are deduped by `event.api_id` and upserted into cache tables.
+- Newly discovered events trigger an extra detail fetch (`/event/get?event_api_id=...`) with exponential backoff on `403/429` and paced requests to reduce rate limiting.
 
 ## Setup
 

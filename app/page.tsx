@@ -1,10 +1,10 @@
 import { ExplorerClient } from "@/components/events/explorer-client"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import type { EventQueryParams } from "@/lib/events"
-import { getMapEvents, getPaginatedEvents, readCacheStatus } from "@/server/events/search"
+import { normalizeDayFilter, normalizeLocationFilter, normalizeQuery, type EventQueryParams } from "@/lib/events"
+import { getEventFacets, getPaginatedEvents } from "@/server/events/search"
 
-const LIST_PAGE_SIZE = 40
+const LIST_PAGE_SIZE = 24
 
 export const dynamic = "force-dynamic"
 
@@ -18,11 +18,6 @@ function readFirst(value: SearchParamsValue) {
   return Array.isArray(value) ? value[0] : value
 }
 
-function parseTab(value: SearchParamsValue): EventQueryParams["tab"] {
-  const tab = readFirst(value)
-  return tab === "map" ? "map" : "list"
-}
-
 function parsePage(value: SearchParamsValue) {
   const parsed = Number.parseInt(readFirst(value) ?? "1", 10)
   if (!Number.isFinite(parsed) || parsed <= 0) {
@@ -33,28 +28,35 @@ function parsePage(value: SearchParamsValue) {
 }
 
 function parseQuery(value: SearchParamsValue) {
-  const query = (readFirst(value) ?? "").trim()
-  return query.slice(0, 200)
+  return normalizeQuery(readFirst(value))
+}
+
+function parseDay(value: SearchParamsValue) {
+  return normalizeDayFilter(readFirst(value))
+}
+
+function parseLocation(value: SearchParamsValue) {
+  return normalizeLocationFilter(readFirst(value))
 }
 
 export default async function HomePage({ searchParams }: HomePageProps) {
   const params = await searchParams
 
   const query: EventQueryParams = {
-    tab: parseTab(params.tab),
     page: parsePage(params.page),
     pageSize: LIST_PAGE_SIZE,
     q: parseQuery(params.q),
+    day: parseDay(params.day),
+    location: parseLocation(params.location),
   }
 
   try {
-    const [listResult, mapEvents, cacheStatus] = await Promise.all([
+    const [listResult, facets] = await Promise.all([
       getPaginatedEvents(query, "lexical"),
-      getMapEvents({ q: query.q, mode: "lexical", limit: 2000 }),
-      readCacheStatus(),
+      getEventFacets({ q: query.q }),
     ])
 
-    return <ExplorerClient listResult={listResult} mapEvents={mapEvents} cacheStatus={cacheStatus} query={query} />
+    return <ExplorerClient initialResult={listResult} facets={facets} query={query} />
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown server error"
 
@@ -63,9 +65,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         <Card className="w-full border-rose-500/40 bg-rose-50/80">
           <CardHeader>
             <Badge className="w-fit bg-rose-700 text-rose-50">Data source unavailable</Badge>
-            <CardTitle>Unable to load cached events</CardTitle>
+            <CardTitle>Unable to load events</CardTitle>
             <CardDescription>
-              Verify `DATABASE_URL`, run migrations, and enqueue the refresh workflow at least once.
+              Try again later.
             </CardDescription>
           </CardHeader>
           <CardContent className="text-sm text-rose-900">{message}</CardContent>

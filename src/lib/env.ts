@@ -37,6 +37,7 @@ export const appConfig = {
     longitude: readNumberEnv("LUMA_LONGITUDE", -122.4194),
     paginationLimit: readPositiveIntEnv("LUMA_PAGINATION_LIMIT", 100),
     pageDelayMs: readPositiveIntEnv("LUMA_PAGE_DELAY_MS", 2500),
+    detailDelayMs: readPositiveIntEnv("LUMA_DETAIL_DELAY_MS", 1750),
     maxPagesPerFeed: readPositiveIntEnv("LUMA_MAX_PAGES_PER_FEED", 500),
   },
 }

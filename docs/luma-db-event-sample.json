@@ -1,0 +1,1069 @@
+{
+  "id": "evt-RLnfzVvOShM3zyy",
+  "title": "Stripe Startups Build Day San Francisco",
+  "cover_url": "https://images.lumacdn.com/event-covers/5u/8fbd8809-4a34-4aa5-b461-aec325da1b4c.png",
+  "start_at": "2026-03-04T17:30:00.000Z",
+  "end_at": "2026-03-05T00:00:00.000Z",
+  "timezone": "America/Los_Angeles",
+  "slug": "43egjo0v",
+  "location_type": "offline",
+  "city": "South San Francisco",
+  "city_state": "South San Francisco, California",
+  "latitude": 37.6625,
+  "longitude": -122.3825,
+  "hosts": [
+    "Stripe Startups",
+    "Michelle Fang"
+  ],
+  "guest_count": 0,
+  "ticket_count": 0,
+  "source_geo": true,
+  "source_place": true,
+  "is_active": true,
+  "raw_payload": {
+    "discover": {
+      "left": {
+        "feed": "geo",
+        "entry": {
+          "role": null,
+          "event": {
+            "url": "43egjo0v",
+            "name": "Stripe Startups Build Day San Francisco",
+            "api_id": "evt-RLnfzVvOShM3zyy",
+            "end_at": "2026-03-05T00:00:00.000Z",
+            "start_at": "2026-03-04T17:30:00.000Z",
+            "timezone": "America/Los_Angeles",
+            "cover_url": "https://images.lumacdn.com/event-covers/5u/8fbd8809-4a34-4aa5-b461-aec325da1b4c.png",
+            "hide_rsvp": true,
+            "coordinate": {
+              "latitude": 37.6625,
+              "longitude": -122.3825
+            },
+            "event_type": "independent",
+            "one_to_one": true,
+            "visibility": "public",
+            "user_api_id": "usr-BNogA1rzu1qUN6e",
+            "virtual_info": {
+              "has_access": false
+            },
+            "location_type": "offline",
+            "recurrence_id": null,
+            "calendar_api_id": "cal-DLxwYFBQH1LAo0O",
+            "show_guest_list": false,
+            "waitlist_status": "active",
+            "geo_address_info": {
+              "city": "South San Francisco",
+              "mode": "obfuscated",
+              "city_state": "South San Francisco, California",
+              "sublocality": "The East Side"
+            },
+            "waitlist_enabled": true,
+            "geo_address_visibility": "guests-only"
+          },
+          "hosts": [
+            {
+              "name": "Stripe Startups",
+              "api_id": "usr-BNogA1rzu1qUN6e",
+              "website": "https://stripe.com/startups",
+              "timezone": "Europe/London",
+              "username": "StripeStartups",
+              "bio_short": "Start. Scale. Grow.\nAmbitious startups have grown into multibillion-dollar businesses on Stripe—scaling from pre-seed to post-IPO.",
+              "avatar_url": "https://images.lumacdn.com/avatars/mm/2df53af6-71bf-4e7b-94cb-bfe3bdde45b2.png",
+              "is_verified": false,
+              "tiktok_handle": null,
+              "last_online_at": "2026-03-04T21:08:46.568Z",
+              "twitter_handle": null,
+              "youtube_handle": "",
+              "linkedin_handle": null,
+              "instagram_handle": null
+            },
+            {
+              "name": "Michelle Fang",
+              "api_id": "usr-FJBqreGCC04Cx3T",
+              "website": null,
+              "timezone": "America/Los_Angeles",
+              "username": null,
+              "bio_short": "Stripe Startups Program Lead",
+              "avatar_url": "https://images.lumacdn.com/avatars/qm/e010daab-a476-43c0-8e8d-e1d058d57b78.jpg",
+              "is_verified": false,
+              "tiktok_handle": null,
+              "last_online_at": "2026-03-04T03:57:44.905Z",
+              "twitter_handle": "michelleefang",
+              "youtube_handle": "",
+              "linkedin_handle": "/in/michellesfang",
+              "instagram_handle": null
+            }
+          ],
+          "score": 0.1912088366839867,
+          "api_id": "evt-RLnfzVvOShM3zyy",
+          "calendar": {
+            "name": "Personal",
+            "slug": null,
+            "api_id": "cal-DLxwYFBQH1LAo0O",
+            "website": null,
+            "geo_city": null,
+            "timezone": null,
+            "avatar_url": "https://cdn.lu.ma/avatars-default/community_avatar_13.png",
+            "coordinate": null,
+            "geo_region": null,
+            "is_blocked": false,
+            "tax_config": null,
+            "tint_color": "#F31A7C",
+            "geo_country": null,
+            "is_personal": true,
+            "verified_at": "2026-01-16T01:10:28.071Z",
+            "access_level": "public",
+            "launch_status": "launched",
+            "meta_pixel_id": null,
+            "personal_user": {
+              "name": "Stripe Startups",
+              "api_id": "usr-BNogA1rzu1qUN6e",
+              "website": "https://stripe.com/startups",
+              "timezone": "Europe/London",
+              "username": "StripeStartups",
+              "bio_short": "Start. Scale. Grow.\nAmbitious startups have grown into multibillion-dollar businesses on Stripe—scaling from pre-seed to post-IPO.",
+              "avatar_url": "https://images.lumacdn.com/avatars/mm/2df53af6-71bf-4e7b-94cb-bfe3bdde45b2.png",
+              "is_verified": false,
+              "tiktok_handle": null,
+              "last_online_at": "2026-03-04T21:08:46.568Z",
+              "twitter_handle": null,
+              "youtube_handle": "",
+              "linkedin_handle": null,
+              "instagram_handle": null
+            },
+            "refund_policy": null,
+            "tiktok_handle": null,
+            "twitter_handle": null,
+            "youtube_handle": null,
+            "cover_image_url": "https://images.lumacdn.com/calendar-defaults/patterns/rain-100.png",
+            "linkedin_handle": null,
+            "instagram_handle": null,
+            "luma_plus_active": true,
+            "social_image_url": null,
+            "description_short": null,
+            "stripe_account_id": null,
+            "personal_user_api_id": "usr-BNogA1rzu1qUN6e",
+            "google_measurement_id": null,
+            "track_meta_ads_from_luma": false,
+            "event_submission_restriction": "open"
+          },
+          "start_at": "2026-03-04T17:30:00.000Z",
+          "cover_image": {
+            "colors": [
+              "#16171a",
+              "#c0c1bf",
+              "#d44c52"
+            ],
+            "palette": {
+              "neutral": [
+                {
+                  "color": "#18171a",
+                  "percentage": 19.85
+                },
+                {
+                  "color": "#787876",
+                  "percentage": 16.16
+                }
+              ],
+              "vibrant": [
+                {
+                  "color": "#a77264",
+                  "percentage": 3
+                }
+              ]
+            }
+          },
+          "guest_count": 0,
+          "query_score": 0,
+          "ticket_info": {
+            "price": null,
+            "is_free": false,
+            "max_price": null,
+            "is_sold_out": true,
+            "currency_info": null,
+            "spots_remaining": 0,
+            "is_near_capacity": false,
+            "require_approval": true
+          },
+          "ticket_count": 0,
+          "featured_city": {
+            "name": "San Francisco",
+            "slug": "sf",
+            "api_id": "discplace-BDj7GNbGlsF7Cka"
+          },
+          "manage_access": null,
+          "featured_guests": [],
+          "waitlist_active": false,
+          "submitted_by_user_api_id": null
+        }
+      },
+      "right": {
+        "feed": "place",
+        "entry": {
+          "role": null,
+          "event": {
+            "url": "43egjo0v",
+            "name": "Stripe Startups Build Day San Francisco",
+            "api_id": "evt-RLnfzVvOShM3zyy",
+            "end_at": "2026-03-05T00:00:00.000Z",
+            "start_at": "2026-03-04T17:30:00.000Z",
+            "timezone": "America/Los_Angeles",
+            "cover_url": "https://images.lumacdn.com/event-covers/5u/8fbd8809-4a34-4aa5-b461-aec325da1b4c.png",
+            "hide_rsvp": true,
+            "coordinate": {
+              "latitude": 37.6625,
+              "longitude": -122.3825
+            },
+            "event_type": "independent",
+            "one_to_one": true,
+            "visibility": "public",
+            "user_api_id": "usr-BNogA1rzu1qUN6e",
+            "virtual_info": {
+              "has_access": false
+            },
+            "location_type": "offline",
+            "recurrence_id": null,
+            "calendar_api_id": "cal-DLxwYFBQH1LAo0O",
+            "show_guest_list": false,
+            "waitlist_status": "active",
+            "geo_address_info": {
+              "city": "South San Francisco",
+              "mode": "obfuscated",
+              "city_state": "South San Francisco, California",
+              "sublocality": "The East Side"
+            },
+            "waitlist_enabled": true,
+            "geo_address_visibility": "guests-only"
+          },
+          "hosts": [
+            {
+              "name": "Stripe Startups",
+              "api_id": "usr-BNogA1rzu1qUN6e",
+              "website": "https://stripe.com/startups",
+              "timezone": "Europe/London",
+              "username": "StripeStartups",
+              "bio_short": "Start. Scale. Grow.\nAmbitious startups have grown into multibillion-dollar businesses on Stripe—scaling from pre-seed to post-IPO.",
+              "avatar_url": "https://images.lumacdn.com/avatars/mm/2df53af6-71bf-4e7b-94cb-bfe3bdde45b2.png",
+              "is_verified": false,
+              "tiktok_handle": null,
+              "last_online_at": "2026-03-04T21:08:46.568Z",
+              "twitter_handle": null,
+              "youtube_handle": "",
+              "linkedin_handle": null,
+              "instagram_handle": null
+            },
+            {
+              "name": "Michelle Fang",
+              "api_id": "usr-FJBqreGCC04Cx3T",
+              "website": null,
+              "timezone": "America/Los_Angeles",
+              "username": null,
+              "bio_short": "Stripe Startups Program Lead",
+              "avatar_url": "https://images.lumacdn.com/avatars/qm/e010daab-a476-43c0-8e8d-e1d058d57b78.jpg",
+              "is_verified": false,
+              "tiktok_handle": null,
+              "last_online_at": "2026-03-04T03:57:44.905Z",
+              "twitter_handle": "michelleefang",
+              "youtube_handle": "",
+              "linkedin_handle": "/in/michellesfang",
+              "instagram_handle": null
+            }
+          ],
+          "score": 0.1911990698352412,
+          "api_id": "evt-RLnfzVvOShM3zyy",
+          "calendar": {
+            "name": "Personal",
+            "slug": null,
+            "api_id": "cal-DLxwYFBQH1LAo0O",
+            "website": null,
+            "geo_city": null,
+            "timezone": null,
+            "avatar_url": "https://cdn.lu.ma/avatars-default/community_avatar_13.png",
+            "coordinate": null,
+            "geo_region": null,
+            "is_blocked": false,
+            "tax_config": null,
+            "tint_color": "#F31A7C",
+            "geo_country": null,
+            "is_personal": true,
+            "verified_at": "2026-01-16T01:10:28.071Z",
+            "access_level": "public",
+            "launch_status": "launched",
+            "meta_pixel_id": null,
+            "personal_user": {
+              "name": "Stripe Startups",
+              "api_id": "usr-BNogA1rzu1qUN6e",
+              "website": "https://stripe.com/startups",
+              "timezone": "Europe/London",
+              "username": "StripeStartups",
+              "bio_short": "Start. Scale. Grow.\nAmbitious startups have grown into multibillion-dollar businesses on Stripe—scaling from pre-seed to post-IPO.",
+              "avatar_url": "https://images.lumacdn.com/avatars/mm/2df53af6-71bf-4e7b-94cb-bfe3bdde45b2.png",
+              "is_verified": false,
+              "tiktok_handle": null,
+              "last_online_at": "2026-03-04T21:08:46.568Z",
+              "twitter_handle": null,
+              "youtube_handle": "",
+              "linkedin_handle": null,
+              "instagram_handle": null
+            },
+            "refund_policy": null,
+            "tiktok_handle": null,
+            "twitter_handle": null,
+            "youtube_handle": null,
+            "cover_image_url": "https://images.lumacdn.com/calendar-defaults/patterns/rain-100.png",
+            "linkedin_handle": null,
+            "instagram_handle": null,
+            "luma_plus_active": true,
+            "social_image_url": null,
+            "description_short": null,
+            "stripe_account_id": null,
+            "personal_user_api_id": "usr-BNogA1rzu1qUN6e",
+            "google_measurement_id": null,
+            "track_meta_ads_from_luma": false,
+            "event_submission_restriction": "open"
+          },
+          "start_at": "2026-03-04T17:30:00.000Z",
+          "cover_image": {
+            "colors": [
+              "#16171a",
+              "#c0c1bf",
+              "#d44c52"
+            ],
+            "palette": {
+              "neutral": [
+                {
+                  "color": "#18171a",
+                  "percentage": 19.85
+                },
+                {
+                  "color": "#787876",
+                  "percentage": 16.16
+                }
+              ],
+              "vibrant": [
+                {
+                  "color": "#a77264",
+                  "percentage": 3
+                }
+              ]
+            }
+          },
+          "guest_count": 0,
+          "query_score": 0,
+          "ticket_info": {
+            "price": null,
+            "is_free": false,
+            "max_price": null,
+            "is_sold_out": true,
+            "currency_info": null,
+            "spots_remaining": 0,
+            "is_near_capacity": false,
+            "require_approval": true
+          },
+          "ticket_count": 0,
+          "featured_city": {
+            "name": "San Francisco",
+            "slug": "sf",
+            "api_id": "discplace-BDj7GNbGlsF7Cka"
+          },
+          "manage_access": null,
+          "featured_guests": [],
+          "waitlist_active": false,
+          "submitted_by_user_api_id": "usr-BNogA1rzu1qUN6e"
+        }
+      }
+    },
+    "detail": {
+      "api_id": "evt-RLnfzVvOShM3zyy",
+      "accepts_usdc_for_usd": false,
+      "calendar": {
+        "access_level": "public",
+        "api_id": "cal-DLxwYFBQH1LAo0O",
+        "avatar_url": "https://cdn.lu.ma/avatars-default/community_avatar_13.png",
+        "coordinate": null,
+        "cover_image_url": "https://images.lumacdn.com/calendar-defaults/patterns/rain-100.png",
+        "description_short": null,
+        "event_submission_restriction": "open",
+        "geo_city": null,
+        "geo_country": null,
+        "geo_region": null,
+        "google_measurement_id": null,
+        "instagram_handle": null,
+        "is_blocked": false,
+        "launch_status": "launched",
+        "linkedin_handle": null,
+        "luma_plus_active": true,
+        "meta_pixel_id": null,
+        "name": "Personal",
+        "personal_user_api_id": "usr-BNogA1rzu1qUN6e",
+        "refund_policy": null,
+        "slug": null,
+        "social_image_url": null,
+        "stripe_account_id": null,
+        "tax_config": null,
+        "tiktok_handle": null,
+        "timezone": null,
+        "tint_color": "#F31A7C",
+        "track_meta_ads_from_luma": false,
+        "twitter_handle": null,
+        "verified_at": "2026-01-16T01:10:28.071Z",
+        "website": null,
+        "youtube_handle": null,
+        "payment_methods": [],
+        "solana_treasury_address": null,
+        "charges_enabled": null,
+        "is_personal": true,
+        "personal_user": {
+          "api_id": "usr-BNogA1rzu1qUN6e",
+          "avatar_url": "https://images.lumacdn.com/avatars/mm/2df53af6-71bf-4e7b-94cb-bfe3bdde45b2.png",
+          "bio_short": "Start. Scale. Grow.\nAmbitious startups have grown into multibillion-dollar businesses on Stripe—scaling from pre-seed to post-IPO.",
+          "instagram_handle": null,
+          "is_verified": false,
+          "last_online_at": "2026-03-04T21:42:13.833Z",
+          "linkedin_handle": null,
+          "name": "Stripe Startups",
+          "tiktok_handle": null,
+          "timezone": "Europe/London",
+          "twitter_handle": null,
+          "username": "StripeStartups",
+          "website": "https://stripe.com/startups",
+          "youtube_handle": ""
+        }
+      },
+      "meta_pixel_id": null,
+      "coupon": null,
+      "google_measurement_id": null,
+      "stripe_account_id": null,
+      "payment_methods": [],
+      "event": {
+        "api_id": "evt-RLnfzVvOShM3zyy",
+        "calendar_api_id": "cal-DLxwYFBQH1LAo0O",
+        "cover_url": "https://images.lumacdn.com/event-covers/5u/8fbd8809-4a34-4aa5-b461-aec325da1b4c.png",
+        "end_at": "2026-03-05T00:00:00.000Z",
+        "event_type": "independent",
+        "hide_rsvp": true,
+        "location_type": "offline",
+        "name": "Stripe Startups Build Day San Francisco",
+        "one_to_one": true,
+        "recurrence_id": null,
+        "show_guest_list": false,
+        "start_at": "2026-03-04T17:30:00.000Z",
+        "timezone": "America/Los_Angeles",
+        "url": "43egjo0v",
+        "user_api_id": "usr-BNogA1rzu1qUN6e",
+        "visibility": "public",
+        "virtual_info": {
+          "has_access": false
+        },
+        "geo_address_info": {
+          "mode": "obfuscated",
+          "city": "South San Francisco",
+          "city_state": "South San Francisco, California",
+          "sublocality": "The East Side"
+        },
+        "geo_address_visibility": "guests-only",
+        "coordinate": {
+          "latitude": 37.6625,
+          "longitude": -122.3825
+        },
+        "waitlist_enabled": true,
+        "waitlist_status": "active"
+      },
+      "start_at": "2026-03-04T17:30:00.000Z",
+      "guest_data": {
+        "email": null,
+        "name": null,
+        "ticket_key": null,
+        "approval_status": null,
+        "proxy_key": null,
+        "event_tickets": [],
+        "payments": []
+      },
+      "featured_guests": [],
+      "has_available_ticket_types": true,
+      "refund_policy": null,
+      "guest_count": 0,
+      "ticket_count": 0,
+      "hosts": [
+        {
+          "name": "Stripe Startups",
+          "api_id": "usr-BNogA1rzu1qUN6e",
+          "website": "https://stripe.com/startups",
+          "timezone": "Europe/London",
+          "username": "StripeStartups",
+          "bio_short": "Start. Scale. Grow.\nAmbitious startups have grown into multibillion-dollar businesses on Stripe—scaling from pre-seed to post-IPO.",
+          "avatar_url": "https://images.lumacdn.com/avatars/mm/2df53af6-71bf-4e7b-94cb-bfe3bdde45b2.png",
+          "is_verified": false,
+          "tiktok_handle": null,
+          "last_online_at": "2026-03-04T21:42:13.833Z",
+          "twitter_handle": null,
+          "youtube_handle": "",
+          "linkedin_handle": null,
+          "instagram_handle": null
+        },
+        {
+          "name": "Michelle Fang",
+          "api_id": "usr-FJBqreGCC04Cx3T",
+          "website": null,
+          "timezone": "America/Los_Angeles",
+          "username": null,
+          "bio_short": "Stripe Startups Program Lead",
+          "avatar_url": "https://images.lumacdn.com/avatars/qm/e010daab-a476-43c0-8e8d-e1d058d57b78.jpg",
+          "is_verified": false,
+          "tiktok_handle": null,
+          "last_online_at": "2026-03-04T03:57:44.905Z",
+          "twitter_handle": "michelleefang",
+          "youtube_handle": "",
+          "linkedin_handle": "/in/michellesfang",
+          "instagram_handle": null
+        }
+      ],
+      "referred_by": null,
+      "cover_image": {
+        "colors": [
+          "#16171a",
+          "#c0c1bf",
+          "#d44c52"
+        ],
+        "palette": {
+          "neutral": [
+            {
+              "color": "#18171a",
+              "percentage": 19.85
+            },
+            {
+              "color": "#787876",
+              "percentage": 16.16
+            }
+          ],
+          "vibrant": [
+            {
+              "color": "#a77264",
+              "percentage": 3
+            }
+          ]
+        }
+      },
+      "sessions": [],
+      "ticket_types": [
+        {
+          "api_id": "evtticktyp-4wBHSKOWfct42I1",
+          "cents": null,
+          "currency": null,
+          "description": null,
+          "ethereum_token_requirements": [],
+          "event_api_id": "evt-RLnfzVvOShM3zyy",
+          "is_flexible": false,
+          "is_hidden": false,
+          "max_capacity": null,
+          "membership_restriction": null,
+          "min_cents": null,
+          "position": "8",
+          "name": "Standard",
+          "require_approval": true,
+          "type": "free",
+          "valid_end_at": null,
+          "valid_start_at": null,
+          "num_tickets_registered": 225,
+          "currency_info": null,
+          "num_guests": 225,
+          "spots_remaining": null,
+          "is_disabled": false
+        }
+      ],
+      "featured_infos": [
+        {
+          "type": "discover",
+          "avatar_url": "https://images.lumacdn.com/discovery/sf-icon.png",
+          "tint_color": "#ff6519",
+          "name": "San Francisco",
+          "api_id": "discplace-BDj7GNbGlsF7Cka",
+          "name_raw": "San Francisco",
+          "path": "/sf"
+        },
+        {
+          "type": "calendar",
+          "avatar_url": "https://images.lumacdn.com/calendars/st/0a132c55-f6bd-44b6-b8fe-d452a223d78e.png",
+          "name": "Bond AI - San Francisco and Bay Area",
+          "path": "/genai-sf",
+          "calendar_api_id": "cal-JTdFQadEz0AOxyV",
+          "calendar_type": "calendar_discover"
+        }
+      ],
+      "categories": [
+        {
+          "api_id": "cat-ai",
+          "description": "Join a hackathon, learn about LLMs and prompt engineering, or connect with other AI practitioners.",
+          "event_count": 3066,
+          "hero_image_desktop_url": "https://images.lumacdn.com/discovery/ai-square.png",
+          "icon_url": "https://images.lumacdn.com/discovery/ai-icon.png",
+          "name": "AI",
+          "page_title": "AI Events",
+          "simple_icon_url": "https://images.lumacdn.com/discovery/ai-icon-simple.png",
+          "slug": "ai",
+          "social_image_url": "https://images.lumacdn.com/discovery/ai-social.png",
+          "subscriber_count": 54016,
+          "tint_color": "#dd7aa4"
+        },
+        {
+          "api_id": "cat-tech",
+          "description": "Join a hackathon, jam on product design, and meet fellow tinkerers in the industry of tomorrow.",
+          "event_count": 5204,
+          "hero_image_desktop_url": "https://images.lumacdn.com/discovery/tech-square.png",
+          "icon_url": "https://images.lumacdn.com/discovery/tech-icon.png",
+          "name": "Tech",
+          "page_title": "Tech Events",
+          "simple_icon_url": "https://images.lumacdn.com/discovery/tech-icon-simple.png",
+          "slug": "tech",
+          "social_image_url": "https://images.lumacdn.com/discovery/tech-social.png",
+          "subscriber_count": 26791,
+          "tint_color": "#ebb102"
+        }
+      ],
+      "ticket_info": {
+        "price": null,
+        "is_free": false,
+        "max_price": null,
+        "is_sold_out": true,
+        "spots_remaining": 0,
+        "is_near_capacity": false,
+        "require_approval": true,
+        "currency_info": null
+      },
+      "subscribed_to_calendar": false,
+      "event_invite": null,
+      "role": null,
+      "manage_access": null,
+      "sold_out": true,
+      "locale": "en",
+      "theme_meta": {
+        "theme": "legacy"
+      },
+      "tint_color": "#7b6492",
+      "can_register_for_multiple_tickets": false,
+      "font_title": "snpro",
+      "description_mirror": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "text": "Join the Stripe founder community for a day of hands-on building and coworking with the Stripe team. Whether you’re looking for a chance to connect with other founders, 1:1 guidance from the Stripe team, or just a change of scenery, we’d love to have you join.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "text": "Build Days are coworking days with Stripe, designed specifically for founders—whether you’re already building on Stripe or just getting started. Plus, get lunch, coffee, and swag on us. ",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "text": "Don’t miss the morning as we kick off with an intimate fireside chat featuring Zach Lloyd, CEO of ",
+                "type": "text"
+              },
+              {
+                "text": "Warp.dev",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "https://Warp.dev"
+                    }
+                  }
+                ]
+              },
+              {
+                "text": ". Warp is an agentic development environment that empowers developers to ship better software more quickly. Previously a principal engineer at Google, cofounder and CTO at SelfMade, and interim CTO at TIME, Zach will walk us through the founding journey of Warp. Join us in the room to hear his practical advice on how to build and scale a company in the AI era.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "text": "You’ll also get to see demos of Stripe’s latest products directly from the product teams, so you can leave with insights on how to monetize your AI product, build multisided marketplaces, scale in global markets, and more.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "text": "Don't miss out on",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "bullet_list",
+            "content": [
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "An intimate fireside chat with Zach Lloyd, CEO of Warp",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "Hands-on integration support from Stripe experts",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "1:1 consults on the best Stripe strategy for your business",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "Coworking all day with a curated group of venture-backed founders",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "Free lunch, coffee, and swag (Stripe Press, complimentary Stripe Sessions passes, and more)",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "Demos of Stripe’s latest products (see the schedule below)",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "text": "Schedule",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "bullet_list",
+            "content": [
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "9:30a.m.",
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "text": " Arrival and check-in",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "10:00a.m. ",
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "text": "Fireside chat with Zach Lloyd of Warp",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "11:15a.m.",
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "text": " Take a tour of Stripe’s developer tools to monetize quickly (Stripe developer platform).",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "11:45a.m. ",
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "text": "Get your business agent-ready and support agentic commerce (Agentic Commerce Suite, including the Agentic Commerce Protocol or ACP).",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "1:30p.m. ",
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "text": "Monetize and iterate pricing for AI products (subscriptions, usage-based billing, and token billing).",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "2:00p.m",
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "text": ". Reach new buyers and scale in global markets with stablecoins.",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "2:30p.m.",
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "text": " Build a compliant, multisided marketplace (Stripe Connect).",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "list_item",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "text": "3:00p.m.",
+                        "type": "text",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "text": " Join open mic demos that showcase what founders in the room are building.",
+                        "type": "text"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "eth_address_requirement": null,
+      "name_requirement": "full-name",
+      "phone_number_requirement": null,
+      "solana_address_requirement": null,
+      "registration_questions": [
+        {
+          "id": "is35nr4e",
+          "label": "What is your LinkedIn profile?",
+          "required": true,
+          "question_type": "linkedin"
+        },
+        {
+          "id": "tmzigwil",
+          "label": "Company Website",
+          "required": true,
+          "question_type": "url"
+        },
+        {
+          "id": "4k1a5416",
+          "label": "Where are you in your Stripe journey?",
+          "options": [
+            "I need help with ideation. I'm just getting started.",
+            "I need help with implementation. I'm ready to build.",
+            "I need help with iteration. I want to explore how to do more with Stripe."
+          ],
+          "required": true,
+          "question_type": "dropdown"
+        },
+        {
+          "id": "fw2yxnjv",
+          "label": "What are you hoping to get out of Build Day?",
+          "required": false,
+          "question_type": "long-text"
+        },
+        {
+          "id": "5lrzsbv5",
+          "label": "How did you hear about Build Day?",
+          "required": false,
+          "question_type": "text"
+        }
+      ],
+      "is_flagged": false,
+      "is_primary_calendar_admin": false,
+      "show_unlock_code_option": false,
+      "has_multiple_ticket_types": false,
+      "membership_tiers": [],
+      "membership_info": null,
+      "waitlist_active": true,
+      "route": null,
+      "featured_city": {
+        "api_id": "discplace-BDj7GNbGlsF7Cka",
+        "slug": "sf",
+        "name": "San Francisco"
+      }
+    }
+  },
+  "first_seen_at": "2026-03-04T20:25:40.554Z",
+  "last_seen_at": "2026-03-04T21:40:58.319Z",
+  "search_document": "'build':3 'california':13 'day':4 'fang':17 'francisco':6,9,12 'michelle':16 'san':5,8,11 'south':7,10 'startups':2,15 'stripe':1,14",
+  "created_at": "2026-03-04T20:25:40.554Z",
+  "updated_at": "2026-03-04T21:40:58.319Z"
+}

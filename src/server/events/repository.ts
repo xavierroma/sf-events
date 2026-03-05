@@ -90,6 +90,26 @@ export async function beginRefreshGuard(runId: string) {
   })
 }
 
+export async function findExistingEventIds(ids: string[]): Promise<string[]> {
+  const uniqueIds = Array.from(new Set(ids))
+  if (uniqueIds.length === 0) {
+    return []
+  }
+
+  return withClient(async (client) => {
+    const result = await client.query<{ id: string }>(
+      `
+        SELECT id
+        FROM events
+        WHERE id = ANY($1::text[])
+      `,
+      [uniqueIds],
+    )
+
+    return result.rows.map((row) => row.id)
+  })
+}
+
 export async function persistEventsSnapshot(runId: string, events: PersistableEvent[]) {
   await withClient(async (client) => {
     await client.query("BEGIN")
@@ -171,7 +191,7 @@ export async function persistEventsSnapshot(runId: string, events: PersistableEv
               source_geo = EXCLUDED.source_geo,
               source_place = EXCLUDED.source_place,
               is_active = TRUE,
-              raw_payload = EXCLUDED.raw_payload,
+              raw_payload = events.raw_payload || EXCLUDED.raw_payload,
               last_seen_at = NOW(),
               updated_at = NOW()
           `,

@@ -2,7 +2,15 @@ import "server-only"
 
 import { dbQuery } from "@/db/client"
 import { getCacheStatus } from "@/server/events/repository"
-import type { CacheStatus, EventListItem, EventQueryParams, PaginatedEventsResult, SearchMode } from "@/lib/events"
+import type {
+  CacheStatus,
+  EventFacetsResult,
+  EventListItem,
+  EventQueryParams,
+  PaginatedEventsResult,
+  SearchMode,
+} from "@/lib/events"
+import { normalizeDayFilter, normalizeLocationFilter, normalizeQuery } from "@/lib/events"
 
 interface EventRow {
   id: string
@@ -22,12 +30,20 @@ interface EventRow {
   ticket_count: number | null
   source_geo: boolean
   source_place: boolean
+  short_address: string | null
+  description_mirror: unknown
 }
 
 interface SearchFilters {
   whereSql: string
   values: unknown[]
   tsQueryIndex: number | null
+}
+
+interface EventSearchFiltersInput {
+  q: string
+  day?: string | null
+  location?: string | null
 }
 
 function mapEventRow(row: EventRow): EventListItem {
@@ -49,37 +65,58 @@ function mapEventRow(row: EventRow): EventListItem {
     ticketCount: row.ticket_count,
     sourceGeo: row.source_geo,
     sourcePlace: row.source_place,
+    shortAddress: row.short_address ?? null,
+    descriptionMirror: row.description_mirror ?? undefined,
   }
 }
 
-function buildSearchFilters(q: string): SearchFilters {
-  const trimmed = q.trim()
+function buildSearchFilters(input: EventSearchFiltersInput): SearchFilters {
+  const values: unknown[] = []
+  const conditions: string[] = ["is_active = TRUE"]
 
-  if (!trimmed) {
-    return {
-      whereSql: "WHERE is_active = TRUE",
-      values: [],
-      tsQueryIndex: null,
-    }
+  const normalizedQuery = normalizeQuery(input.q)
+  let tsQueryIndex: number | null = null
+
+  if (normalizedQuery) {
+    values.push(normalizedQuery)
+    tsQueryIndex = values.length
+
+    values.push(`%${normalizedQuery}%`)
+    const ilikeIndex = values.length
+
+    conditions.push(`
+      (
+        search_document @@ plainto_tsquery('simple', $${tsQueryIndex})
+        OR title ILIKE $${ilikeIndex}
+        OR city ILIKE $${ilikeIndex}
+        OR city_state ILIKE $${ilikeIndex}
+        OR EXISTS (
+          SELECT 1
+          FROM unnest(hosts) AS host
+          WHERE host ILIKE $${ilikeIndex}
+        )
+      )
+    `)
+  }
+
+  const normalizedDay = normalizeDayFilter(input.day ?? null)
+  if (normalizedDay) {
+    values.push(normalizedDay)
+    const dayIndex = values.length
+    conditions.push(`DATE(start_at AT TIME ZONE COALESCE(timezone, 'America/Los_Angeles')) = $${dayIndex}::date`)
+  }
+
+  const normalizedLocation = normalizeLocationFilter(input.location ?? null)
+  if (normalizedLocation) {
+    values.push(normalizedLocation)
+    const locationIndex = values.length
+    conditions.push(`LOWER(COALESCE(NULLIF(city_state, ''), NULLIF(city, ''))) = LOWER($${locationIndex})`)
   }
 
   return {
-    whereSql: `
-      WHERE is_active = TRUE
-        AND (
-          search_document @@ plainto_tsquery('simple', $1)
-          OR title ILIKE $2
-          OR city ILIKE $2
-          OR city_state ILIKE $2
-          OR EXISTS (
-            SELECT 1
-            FROM unnest(hosts) AS host
-            WHERE host ILIKE $2
-          )
-        )
-    `,
-    values: [trimmed, `%${trimmed}%`],
-    tsQueryIndex: 1,
+    whereSql: `WHERE ${conditions.join("\n  AND ")}`,
+    values,
+    tsQueryIndex,
   }
 }
 
@@ -100,7 +137,7 @@ export async function getPaginatedEvents(params: EventQueryParams, mode: SearchM
   const pageSize = Math.min(Math.max(1, params.pageSize), 100)
   const offset = (page - 1) * pageSize
 
-  const filters = buildSearchFilters(params.q)
+  const filters = buildSearchFilters(params)
   const countResult = await dbQuery<{ total: string }>(
     `
       SELECT COUNT(*)::text AS total
@@ -138,6 +175,10 @@ export async function getPaginatedEvents(params: EventQueryParams, mode: SearchM
         ticket_count,
         source_geo,
         source_place,
+        CASE WHEN raw_payload->'detail'->'event'->'geo_address_info'->>'mode' = 'shown'
+          THEN raw_payload->'detail'->'event'->'geo_address_info'->>'short_address'
+          ELSE NULL END AS short_address,
+        raw_payload->'detail'->'description_mirror' AS description_mirror,
         ${tsQuerySql} AS relevance_score
       FROM events
       ${filters.whereSql}
@@ -166,7 +207,7 @@ export async function getMapEvents(
   }
 
   const limit = Math.min(Math.max(1, options.limit ?? 2000), 5000)
-  const filters = buildSearchFilters(options.q)
+  const filters = buildSearchFilters({ q: options.q })
   const values = [...filters.values, limit]
   const limitIndex = filters.values.length + 1
 
@@ -192,6 +233,10 @@ export async function getMapEvents(
         ticket_count,
         source_geo,
         source_place,
+        CASE WHEN raw_payload->'detail'->'event'->'geo_address_info'->>'mode' = 'shown'
+          THEN raw_payload->'detail'->'event'->'geo_address_info'->>'short_address'
+          ELSE NULL END AS short_address,
+        raw_payload->'detail'->'description_mirror' AS description_mirror,
         ${tsQuerySql} AS relevance_score
       FROM events
       ${filters.whereSql}
@@ -206,4 +251,40 @@ export async function getMapEvents(
 
 export async function readCacheStatus(): Promise<CacheStatus> {
   return getCacheStatus()
+}
+
+export async function getEventFacets(filters: Pick<EventSearchFiltersInput, "q">): Promise<EventFacetsResult> {
+  const search = buildSearchFilters({ q: filters.q })
+
+  const [daysResult, locationsResult] = await Promise.all([
+    dbQuery<{ day: string }>(
+      `
+        SELECT TO_CHAR(DATE(start_at AT TIME ZONE COALESCE(timezone, 'America/Los_Angeles')), 'YYYY-MM-DD') AS day
+        FROM events
+        ${search.whereSql}
+          AND start_at IS NOT NULL
+        GROUP BY day
+        ORDER BY day ASC
+        LIMIT 45
+      `,
+      search.values,
+    ),
+    dbQuery<{ location: string | null }>(
+      `
+        SELECT COALESCE(NULLIF(city_state, ''), NULLIF(city, '')) AS location
+        FROM events
+        ${search.whereSql}
+          AND COALESCE(NULLIF(city_state, ''), NULLIF(city, '')) IS NOT NULL
+        GROUP BY location
+        ORDER BY COUNT(*) DESC, location ASC
+        LIMIT 80
+      `,
+      search.values,
+    ),
+  ])
+
+  return {
+    days: daysResult.rows.map((row) => row.day).filter(Boolean),
+    locations: locationsResult.rows.map((row) => row.location).filter((value): value is string => Boolean(value)),
+  }
 }

@@ -20,13 +20,16 @@ export interface EventListItem {
   ticketCount: number | null
   sourceGeo: boolean
   sourcePlace: boolean
+  shortAddress?: string | null
+  descriptionMirror?: unknown
 }
 
 export interface EventQueryParams {
-  tab: EventTab
   page: number
   pageSize: number
   q: string
+  day: string | null
+  location: string | null
 }
 
 export interface PaginatedEventsResult {
@@ -35,6 +38,11 @@ export interface PaginatedEventsResult {
   page: number
   pageSize: number
   hasNext: boolean
+}
+
+export interface EventFacetsResult {
+  days: string[]
+  locations: string[]
 }
 
 export interface CacheStatus {
@@ -98,4 +106,20 @@ export function getLocationLabel(event: EventListItem) {
   }
 
   return event.cityState ?? event.city ?? "Hidden / Unknown"
+}
+
+const DAY_FILTER_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+
+export function normalizeQuery(value: string | null | undefined) {
+  return (value ?? "").trim().slice(0, 200)
+}
+
+export function normalizeDayFilter(value: string | null | undefined) {
+  const candidate = (value ?? "").trim()
+  return DAY_FILTER_PATTERN.test(candidate) ? candidate : null
+}
+
+export function normalizeLocationFilter(value: string | null | undefined) {
+  const candidate = (value ?? "").trim()
+  return candidate ? candidate.slice(0, 120) : null
 }

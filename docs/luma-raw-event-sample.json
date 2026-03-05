@@ -1,0 +1,172 @@
+{
+  "api_id": "evt-RLnfzVvOShM3zyy",
+  "event": {
+    "api_id": "evt-RLnfzVvOShM3zyy",
+    "calendar_api_id": "cal-DLxwYFBQH1LAo0O",
+    "cover_url": "https://images.lumacdn.com/event-covers/5u/8fbd8809-4a34-4aa5-b461-aec325da1b4c.png",
+    "end_at": "2026-03-05T00:00:00.000Z",
+    "event_type": "independent",
+    "hide_rsvp": true,
+    "location_type": "offline",
+    "name": "Stripe Startups Build Day San Francisco",
+    "one_to_one": true,
+    "recurrence_id": null,
+    "show_guest_list": false,
+    "start_at": "2026-03-04T17:30:00.000Z",
+    "timezone": "America/Los_Angeles",
+    "url": "43egjo0v",
+    "user_api_id": "usr-BNogA1rzu1qUN6e",
+    "visibility": "public",
+    "virtual_info": {
+      "has_access": false
+    },
+    "geo_address_info": {
+      "mode": "obfuscated",
+      "city": "South San Francisco",
+      "city_state": "South San Francisco, California",
+      "sublocality": "The East Side"
+    },
+    "geo_address_visibility": "guests-only",
+    "coordinate": {
+      "latitude": 37.6625,
+      "longitude": -122.3825
+    },
+    "waitlist_enabled": true,
+    "waitlist_status": "active"
+  },
+  "cover_image": {
+    "colors": [
+      "#16171a",
+      "#c0c1bf",
+      "#d44c52"
+    ],
+    "palette": {
+      "neutral": [
+        {
+          "color": "#18171a",
+          "percentage": 19.85
+        },
+        {
+          "color": "#787876",
+          "percentage": 16.16
+        }
+      ],
+      "vibrant": [
+        {
+          "color": "#a77264",
+          "percentage": 3
+        }
+      ]
+    }
+  },
+  "calendar": {
+    "access_level": "public",
+    "api_id": "cal-DLxwYFBQH1LAo0O",
+    "avatar_url": "https://cdn.lu.ma/avatars-default/community_avatar_13.png",
+    "coordinate": null,
+    "cover_image_url": "https://images.lumacdn.com/calendar-defaults/patterns/rain-100.png",
+    "description_short": null,
+    "event_submission_restriction": "open",
+    "geo_city": null,
+    "geo_country": null,
+    "geo_region": null,
+    "google_measurement_id": null,
+    "instagram_handle": null,
+    "is_blocked": false,
+    "launch_status": "launched",
+    "linkedin_handle": null,
+    "luma_plus_active": true,
+    "meta_pixel_id": null,
+    "name": "Personal",
+    "personal_user_api_id": "usr-BNogA1rzu1qUN6e",
+    "refund_policy": null,
+    "slug": null,
+    "social_image_url": null,
+    "stripe_account_id": null,
+    "tax_config": null,
+    "tiktok_handle": null,
+    "timezone": null,
+    "tint_color": "#F31A7C",
+    "track_meta_ads_from_luma": false,
+    "twitter_handle": null,
+    "verified_at": "2026-01-16T01:10:28.071Z",
+    "website": null,
+    "youtube_handle": null,
+    "is_personal": true,
+    "personal_user": {
+      "api_id": "usr-BNogA1rzu1qUN6e",
+      "avatar_url": "https://images.lumacdn.com/avatars/mm/2df53af6-71bf-4e7b-94cb-bfe3bdde45b2.png",
+      "bio_short": "Start. Scale. Grow.\nAmbitious startups have grown into multibillion-dollar businesses on Stripe—scaling from pre-seed to post-IPO.",
+      "instagram_handle": null,
+      "is_verified": false,
+      "last_online_at": "2026-03-04T19:40:29.329Z",
+      "linkedin_handle": null,
+      "name": "Stripe Startups",
+      "tiktok_handle": null,
+      "timezone": "Europe/London",
+      "twitter_handle": null,
+      "username": "StripeStartups",
+      "website": "https://stripe.com/startups",
+      "youtube_handle": ""
+    }
+  },
+  "start_at": "2026-03-04T17:30:00.000Z",
+  "hosts": [
+    {
+      "name": "Stripe Startups",
+      "api_id": "usr-BNogA1rzu1qUN6e",
+      "website": "https://stripe.com/startups",
+      "timezone": "Europe/London",
+      "username": "StripeStartups",
+      "bio_short": "Start. Scale. Grow.\nAmbitious startups have grown into multibillion-dollar businesses on Stripe—scaling from pre-seed to post-IPO.",
+      "avatar_url": "https://images.lumacdn.com/avatars/mm/2df53af6-71bf-4e7b-94cb-bfe3bdde45b2.png",
+      "is_verified": false,
+      "tiktok_handle": null,
+      "last_online_at": "2026-03-04T19:40:29.329Z",
+      "twitter_handle": null,
+      "youtube_handle": "",
+      "linkedin_handle": null,
+      "instagram_handle": null
+    },
+    {
+      "name": "Michelle Fang",
+      "api_id": "usr-FJBqreGCC04Cx3T",
+      "website": null,
+      "timezone": "America/Los_Angeles",
+      "username": null,
+      "bio_short": "Stripe Startups Program Lead",
+      "avatar_url": "https://images.lumacdn.com/avatars/qm/e010daab-a476-43c0-8e8d-e1d058d57b78.jpg",
+      "is_verified": false,
+      "tiktok_handle": null,
+      "last_online_at": "2026-03-04T03:57:44.905Z",
+      "twitter_handle": "michelleefang",
+      "youtube_handle": "",
+      "linkedin_handle": "/in/michellesfang",
+      "instagram_handle": null
+    }
+  ],
+  "guest_count": 0,
+  "ticket_count": 0,
+  "ticket_info": {
+    "price": null,
+    "is_free": false,
+    "max_price": null,
+    "is_sold_out": true,
+    "spots_remaining": 0,
+    "is_near_capacity": false,
+    "require_approval": true,
+    "currency_info": null
+  },
+  "featured_guests": [],
+  "role": null,
+  "manage_access": null,
+  "waitlist_active": false,
+  "featured_city": {
+    "api_id": "discplace-BDj7GNbGlsF7Cka",
+    "name": "San Francisco",
+    "slug": "sf"
+  },
+  "submitted_by_user_api_id": "usr-BNogA1rzu1qUN6e",
+  "score": 0.19649505057337174,
+  "query_score": 0
+}
