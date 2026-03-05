@@ -71,7 +71,7 @@ export function EventTimeline({ groups }: { groups: EventTimelineGroup[] }) {
   return (
     <div className="space-y-8">
       {groups.length === 0 && (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white/70 p-10 text-center text-sm text-slate-500">
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-white/70 p-10 text-center text-sm text-slate-500 dark:border-slate-600 dark:bg-slate-800/70">
           No events match the current filters.
         </div>
       )}
@@ -81,9 +81,9 @@ export function EventTimeline({ groups }: { groups: EventTimelineGroup[] }) {
         return (
           <section key={group.dayKey} className="space-y-3">
             <div className="pointer-events-none sticky top-14 z-10 -mx-4 px-4 py-1.5 sm:-mx-8 sm:px-8">
-              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/90 px-3 py-1 text-sm shadow-sm backdrop-blur-sm">
+              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/90 px-3 py-1 text-sm shadow-sm backdrop-blur-sm dark:border-slate-700/80 dark:bg-slate-900/90">
                 <span className="h-1.5 w-1.5 rounded-full bg-slate-300" />
-                <span className="font-semibold text-slate-900">{primary}</span>
+                <span className="font-semibold text-slate-900 dark:text-slate-100">{primary}</span>
                 {secondary && <span className="text-slate-400">{secondary}</span>}
               </span>
             </div>
