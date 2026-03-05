@@ -172,7 +172,7 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
               <line x1="11" y1="10" x2="11" y2="22" stroke="#0f172a" strokeWidth="1.5" strokeDasharray="2 2" />
             </svg>
           </span>
-          Bay Area Events
+          BAE
         </h1>
 
         {/* Search input */}

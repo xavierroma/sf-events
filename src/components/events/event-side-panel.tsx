@@ -1,14 +1,31 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { CalendarDays, ChevronUp, ChevronDown, Copy, ExternalLink, MapPin, User, X } from "lucide-react"
 
 import type { EventListItem } from "@/lib/events"
 import { getLocationLabel, toEventUrl } from "@/lib/events"
 import { cn } from "@/lib/utils"
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer"
 
 import { ProseMirrorRenderer } from "./prose-mirror-renderer"
 import { useEventPanel } from "./event-panel-context"
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024) // md breakpoint
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  return isMobile
+}
 
 function hostInitials(host: string) {
   const parts = host
@@ -149,7 +166,7 @@ function PanelContent({ event, onClose }: PanelContentProps) {
   return (
     <div className="flex h-full flex-col">
       {/* Top bar */}
-      <div className="flex shrink-0 items-center gap-1 border-b border-border bg-card px-2 py-2">
+      <div className="flex shrink-0 items-center gap-1 px-2 py-2">
         <button
           onClick={() => {
             const url = `${window.location.origin}${window.location.pathname}?event=${event.id}`
@@ -191,13 +208,6 @@ function PanelContent({ event, onClose }: PanelContentProps) {
             aria-label="Next event"
           >
             <ChevronDown className="h-4 w-4" />
-          </button>
-          <button
-            onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            aria-label="Close panel"
-          >
-            <X className="h-4 w-4" />
           </button>
         </div>
       </div>
@@ -343,38 +353,19 @@ export function EventInlineSidebar() {
 
 export function EventSidePanelMobile() {
   const { selectedEvent, closePanel } = useEventPanel()
+  const isMobile = useIsMobile()
+
+  if (!isMobile) {
+    return null
+  }
+
   const isOpen = selectedEvent !== null
 
-  useEffect(() => {
-    if (!isOpen) return
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") closePanel()
-    }
-    window.addEventListener("keydown", handleKey)
-    return () => window.removeEventListener("keydown", handleKey)
-  }, [isOpen, closePanel])
-
   return (
-    <>
-      <div
-        className={cn(
-          "fixed inset-0 z-40 bg-black/20 backdrop-blur-[2px] transition-opacity duration-300 lg:hidden",
-          isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
-        )}
-        onClick={closePanel}
-        aria-hidden="true"
-      />
-      <div
-        className={cn(
-          "fixed bottom-0 right-0 top-0 z-50 flex w-full flex-col bg-card shadow-2xl transition-transform duration-300 ease-in-out sm:w-[400px] lg:hidden",
-          isOpen ? "translate-x-0" : "translate-x-full",
-        )}
-        role="dialog"
-        aria-modal="true"
-        aria-label={selectedEvent?.title ?? "Event details"}
-      >
+    <Drawer open={isOpen} onOpenChange={(open: boolean) => !open && closePanel()}>
+      <DrawerContent className="h-full">
         {selectedEvent && <PanelContent event={selectedEvent} onClose={closePanel} />}
-      </div>
-    </>
+      </DrawerContent>
+    </Drawer>
   )
 }
