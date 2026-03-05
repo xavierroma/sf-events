@@ -73,11 +73,11 @@ export function EventCard({ event }: { event: EventListItem }) {
     <article className={cn(
       "grid grid-cols-[1fr_auto] gap-4 rounded-[26px] border p-4 shadow-[0_1px_0_rgba(15,23,42,0.04)] transition-colors",
       isSelected
-        ? "border-slate-900 bg-white ring-1 ring-slate-900 dark:border-slate-100 dark:bg-slate-900 dark:ring-slate-100"
-        : "border-slate-200/90 bg-white/85 hover:border-slate-300 hover:bg-white dark:border-slate-700/90 dark:bg-slate-800/85 dark:hover:border-slate-600 dark:hover:bg-slate-800",
+        ? "border-foreground bg-card ring-1 ring-foreground"
+        : "border-border/90 bg-card/85 hover:bg-card",
     )}>
       <div className="min-w-0 space-y-1.5">
-        <div className="flex items-center gap-2 text-sm text-slate-400">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
           {isEventLive(event) ? (
             <span className="flex items-center gap-1.5 font-semibold text-orange-500">
               <span className="relative flex h-2 w-2">
@@ -90,15 +90,15 @@ export function EventCard({ event }: { event: EventListItem }) {
           <span>{formatTimelineTime(event)}</span>
         </div>
 
-        <h3 className="text-xl font-bold leading-snug text-slate-900 dark:text-slate-100">{event.title}</h3>
+        <h3 className="text-xl font-bold leading-snug text-foreground">{event.title}</h3>
 
-        <div className="flex min-w-0 items-center gap-2 text-sm text-slate-500">
+        <div className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
           <div className="flex shrink-0 -space-x-2">
             {event.hosts.slice(0, 3).map((host, index) => (
               <span
                 key={`${event.id}-${host}-${index}`}
                 className={cn(
-                  "inline-flex h-6 w-6 items-center justify-center rounded-full border border-white text-[10px] font-medium dark:border-slate-800",
+                  "inline-flex h-6 w-6 items-center justify-center rounded-full border border-background text-[10px] font-medium",
                   index === 0 && "bg-emerald-100 text-emerald-800",
                   index === 1 && "bg-amber-100 text-amber-800",
                   index === 2 && "bg-sky-100 text-sky-800",
@@ -111,17 +111,17 @@ export function EventCard({ event }: { event: EventListItem }) {
           <p className="truncate">{getHostLine(event.hosts)}</p>
         </div>
 
-        <p className="flex items-center gap-1.5 text-sm text-slate-500">
+        <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
           <MapPin className="h-3.5 w-3.5 shrink-0" />
           <span className="truncate">{getLocationLabel(event)}</span>
         </p>
       </div>
 
-      <div className="h-[130px] w-[130px] shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 dark:border-slate-700 dark:bg-slate-700">
+      <div className="h-[130px] w-[130px] shrink-0 overflow-hidden rounded-2xl border border-border bg-muted">
         {event.coverUrl ? (
           <img src={event.coverUrl} alt={event.title} className="h-full w-full object-cover" loading="lazy" />
         ) : (
-          <div className="flex h-full items-center justify-center px-4 text-center text-xs text-slate-400">No image</div>
+          <div className="flex h-full items-center justify-center px-4 text-center text-xs text-muted-foreground">No image</div>
         )}
       </div>
     </article>

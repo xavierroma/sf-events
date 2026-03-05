@@ -92,13 +92,13 @@ function PanelContent({ event, onClose }: PanelContentProps) {
   return (
     <div className="flex h-full flex-col">
       {/* Top bar */}
-      <div className="flex shrink-0 items-center gap-1 border-b border-slate-100 bg-white px-2 py-2 dark:border-slate-700 dark:bg-slate-900">
+      <div className="flex shrink-0 items-center gap-1 border-b border-border bg-card px-2 py-2">
         <button
           onClick={() => {
             const url = `${window.location.origin}${window.location.pathname}?event=${event.id}`
             copyToClipboard(url)
           }}
-          className="flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+          className="flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <Copy className="h-3.5 w-3.5" />
           Copy Link
@@ -109,7 +109,7 @@ function PanelContent({ event, onClose }: PanelContentProps) {
             href={eventUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+            className="flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             Event Page
             <ExternalLink className="h-3.5 w-3.5" />
@@ -122,7 +122,7 @@ function PanelContent({ event, onClose }: PanelContentProps) {
           <button
             onClick={goPrev}
             disabled={!hasPrev}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 disabled:opacity-30 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-30"
             aria-label="Previous event"
           >
             <ChevronUp className="h-4 w-4" />
@@ -130,14 +130,14 @@ function PanelContent({ event, onClose }: PanelContentProps) {
           <button
             onClick={goNext}
             disabled={!hasNext}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 disabled:opacity-30 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-30"
             aria-label="Next event"
           >
             <ChevronDown className="h-4 w-4" />
           </button>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             aria-label="Close panel"
           >
             <X className="h-4 w-4" />
@@ -149,11 +149,11 @@ function PanelContent({ event, onClose }: PanelContentProps) {
       <div className="min-h-0 flex-1 overflow-y-auto">
         {/* Cover image */}
         {event.coverUrl ? (
-          <div className="aspect-[4/3] w-full overflow-hidden bg-slate-100 dark:bg-slate-700">
+          <div className="aspect-[4/3] w-full overflow-hidden bg-muted">
             <img src={event.coverUrl} alt={event.title} className="h-full w-full object-cover" />
           </div>
         ) : (
-          <div className="flex aspect-[4/3] w-full items-center justify-center bg-slate-100 text-sm text-slate-400 dark:bg-slate-700">
+          <div className="flex aspect-[4/3] w-full items-center justify-center bg-muted text-sm text-muted-foreground">
             No cover image
           </div>
         )}
@@ -161,14 +161,14 @@ function PanelContent({ event, onClose }: PanelContentProps) {
         <div className="space-y-5 p-5">
           {/* Title + hosts */}
           <div className="space-y-1.5">
-            <h2 className="text-2xl font-bold leading-snug text-slate-900 dark:text-slate-100">{event.title}</h2>
+            <h2 className="text-2xl font-bold leading-snug text-foreground">{event.title}</h2>
             <div className="flex items-center gap-2">
               <div className="flex shrink-0 -space-x-2">
                 {event.hosts.slice(0, 3).map((host, index) => (
                   <span
                     key={`${event.id}-${host}-${index}`}
                     className={cn(
-                      "inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white text-[10px] font-medium dark:border-slate-900",
+                      "inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-background text-[10px] font-medium",
                       index === 0 && "bg-emerald-100 text-emerald-800",
                       index === 1 && "bg-amber-100 text-amber-800",
                       index === 2 && "bg-sky-100 text-sky-800",
@@ -178,7 +178,7 @@ function PanelContent({ event, onClose }: PanelContentProps) {
                   </span>
                 ))}
               </div>
-              <span className="text-sm text-slate-500">{getHostLine(event.hosts)}</span>
+              <span className="text-sm text-muted-foreground">{getHostLine(event.hosts)}</span>
             </div>
           </div>
 
@@ -186,42 +186,42 @@ function PanelContent({ event, onClose }: PanelContentProps) {
           <div className="flex gap-3">
             <div className="flex flex-1 items-start gap-3">
               {dayBadge && (
-                <div className="flex w-11 shrink-0 flex-col items-center rounded-lg border border-slate-200 bg-white text-center shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                <div className="flex w-11 shrink-0 flex-col items-center rounded-lg border border-border bg-card text-center shadow-sm">
                   <div className="w-full rounded-t-lg bg-rose-500 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white">
                     {dayBadge.month}
                   </div>
-                  <div className="py-1 text-lg font-bold leading-none text-slate-900 dark:text-slate-100">{dayBadge.day}</div>
+                  <div className="py-1 text-lg font-bold leading-none text-foreground">{dayBadge.day}</div>
                 </div>
               )}
               <div className="min-w-0">
-                {dateLabel && <p className="font-medium text-slate-800 dark:text-slate-200">{dateLabel}</p>}
-                <p className="text-sm text-slate-500">{timeLabel}</p>
+                {dateLabel && <p className="font-medium text-foreground">{dateLabel}</p>}
+                <p className="text-sm text-muted-foreground">{timeLabel}</p>
               </div>
             </div>
 
             {event.locationType !== "online" && locationLabel && (
               <div className="flex flex-1 items-start gap-2">
-                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
-                  <MapPin className="h-4 w-4 text-slate-500" />
+                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card shadow-sm">
+                  <MapPin className="h-4 w-4 text-muted-foreground" />
                 </div>
                 <div className="min-w-0">
                   {event.shortAddress
-                    ? <p className="font-medium text-slate-800 dark:text-slate-200">{event.shortAddress}</p>
+                    ? <p className="font-medium text-foreground">{event.shortAddress}</p>
                     : event.locationType === "offline" && (
-                      <p className="font-medium text-slate-500 italic">Register to see address</p>
+                      <p className="font-medium text-muted-foreground italic">Register to see address</p>
                     )
                   }
-                  <p className="text-sm text-slate-500">{locationLabel}</p>
+                  <p className="text-sm text-muted-foreground">{locationLabel}</p>
                 </div>
               </div>
             )}
             {event.locationType === "online" && (
               <div className="flex flex-1 items-start gap-2">
-                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
-                  <MapPin className="h-4 w-4 text-slate-500" />
+                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card shadow-sm">
+                  <MapPin className="h-4 w-4 text-muted-foreground" />
                 </div>
                 <div>
-                  <p className="font-medium text-slate-800 dark:text-slate-200">Online Event</p>
+                  <p className="font-medium text-foreground">Online Event</p>
                 </div>
               </div>
             )}
@@ -229,9 +229,9 @@ function PanelContent({ event, onClose }: PanelContentProps) {
 
           {/* Attendance */}
           {((event.guestCount !== null && event.guestCount > 0) || (event.ticketCount !== null && event.ticketCount > 0)) && (
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
-              <div className="flex items-center gap-2 text-sm text-slate-600">
-                <Users className="h-4 w-4 text-slate-400" />
+            <div className="rounded-xl border border-border bg-muted p-4">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Users className="h-4 w-4 text-muted-foreground" />
                 <span>
                   {event.guestCount !== null && event.guestCount > 0
                     ? `${event.guestCount} going`
@@ -246,7 +246,7 @@ function PanelContent({ event, onClose }: PanelContentProps) {
           {/* About Event */}
           {!!event.descriptionMirror && (
             <div className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">About Event</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">About Event</p>
               <ProseMirrorRenderer doc={event.descriptionMirror} />
             </div>
           )}
@@ -260,12 +260,12 @@ function PanelContent({ event, onClose }: PanelContentProps) {
 function EmptyState() {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-3 p-8 text-center">
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
-        <CalendarDays className="h-6 w-6 text-slate-400" />
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+        <CalendarDays className="h-6 w-6 text-muted-foreground" />
       </div>
       <div className="space-y-1">
-        <p className="text-sm font-medium text-slate-600">Select an event</p>
-        <p className="text-xs text-slate-400">Click any event to see its details here</p>
+        <p className="text-sm font-medium text-muted-foreground">Select an event</p>
+        <p className="text-xs text-muted-foreground">Click any event to see its details here</p>
       </div>
     </div>
   )
@@ -275,7 +275,7 @@ export function EventInlineSidebar() {
   const { selectedEvent, closePanel } = useEventPanel()
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-700/80 dark:bg-slate-900">
+    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
       {selectedEvent ? (
         <PanelContent event={selectedEvent} onClose={closePanel} />
       ) : (
@@ -310,7 +310,7 @@ export function EventSidePanelMobile() {
       />
       <div
         className={cn(
-          "fixed bottom-0 right-0 top-0 z-50 flex w-full flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out sm:w-[400px] lg:hidden dark:bg-slate-900",
+          "fixed bottom-0 right-0 top-0 z-50 flex w-full flex-col bg-card shadow-2xl transition-transform duration-300 ease-in-out sm:w-[400px] lg:hidden",
           isOpen ? "translate-x-0" : "translate-x-full",
         )}
         role="dialog"

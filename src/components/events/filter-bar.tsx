@@ -150,8 +150,8 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
             type="button"
             onClick={handleUnscheduledSelect}
             className={`w-full rounded-md px-2 py-1.5 text-left text-sm transition-colors ${day === "unscheduled"
-              ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
-              : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+              ? "bg-foreground text-background"
+              : "text-muted-foreground hover:bg-muted"
               }`}
           >
             Date TBD
@@ -162,18 +162,18 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
   )
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200/60 bg-[#f2f2f2]/95 backdrop-blur-md dark:border-slate-700/60 dark:bg-[#171717]/95">
+    <header className="sticky top-0 z-30 border-b border-border/60 bg-background/95 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-8">
-        <h1 className="flex-1 text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Events</h1>
+        <h1 className="flex-1 text-xl font-bold tracking-tight text-foreground">Events</h1>
 
         {/* Search input */}
         <div className="relative">
-          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={searchValue}
             onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Search…"
-            className="h-9 w-44 rounded-lg border-slate-200 bg-white pl-8 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="h-9 w-44 rounded-lg border-input bg-card pl-8 text-sm"
           />
         </div>
 
@@ -184,8 +184,8 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
               <button
                 type="button"
                 className={`flex h-9 items-center gap-2 rounded-lg border px-3 text-sm transition-colors ${day
-                  ? "border-slate-900 bg-slate-900 text-white dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900"
-                  : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:border-slate-500 dark:hover:text-slate-200"
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-border bg-card text-muted-foreground hover:text-foreground"
                   }`}
               >
                 <CalendarIcon className="h-3.5 w-3.5 shrink-0" />
@@ -198,7 +198,7 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
           </Popover>
 
           <Select value={location || ALL} onValueChange={handleLocationChange}>
-            <SelectTrigger className="h-9 w-36 rounded-lg border-slate-200 bg-white text-sm dark:border-slate-700 dark:bg-slate-800">
+            <SelectTrigger className="h-9 w-36 rounded-lg border-input bg-card text-sm">
               <SelectValue placeholder="All locations" />
             </SelectTrigger>
             <SelectContent>
@@ -213,7 +213,7 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
             <button
               type="button"
               onClick={resetFilters}
-              className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-slate-400 transition-colors hover:text-slate-600 dark:hover:text-slate-300"
+              className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
             >
               <X className="h-3 w-3" />
               Clear
@@ -229,25 +229,25 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
             type="button"
             onClick={() => setFilterOpen((v) => !v)}
             className={`relative flex h-9 w-9 items-center justify-center rounded-lg border transition-colors ${hasActiveFilters
-              ? "border-slate-900 bg-slate-900 text-white dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900"
-              : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:border-slate-500 dark:hover:text-slate-200"
+              ? "border-foreground bg-foreground text-background"
+              : "border-border bg-card text-muted-foreground hover:text-foreground"
               }`}
           >
             <SlidersHorizontal className="h-4 w-4" />
           </button>
 
           {filterOpen && (
-            <div className="absolute right-0 top-full z-50 mt-2 min-w-[220px] rounded-xl border border-slate-200 bg-white p-3 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+            <div className="absolute right-0 top-full z-50 mt-2 min-w-[220px] rounded-xl border border-border bg-popover p-3 shadow-lg">
               <div className="space-y-3">
                 <div className="space-y-1.5">
-                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Day</p>
+                  <p className="text-xs font-medium text-muted-foreground">Day</p>
                   {dayCalendar}
                 </div>
 
                 <div className="space-y-1.5">
-                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Location</p>
+                  <p className="text-xs font-medium text-muted-foreground">Location</p>
                   <Select value={location || ALL} onValueChange={handleLocationChange}>
-                    <SelectTrigger className="h-8 w-full rounded-lg border-slate-200 text-xs dark:border-slate-700">
+                    <SelectTrigger className="h-8 w-full rounded-lg border-input text-xs">
                       <SelectValue placeholder="All locations" />
                     </SelectTrigger>
                     <SelectContent>
@@ -263,7 +263,7 @@ export function FilterBar({ query, dayOptions, locationOptions }: FilterBarProps
                   <button
                     type="button"
                     onClick={resetFilters}
-                    className="flex w-full items-center gap-1.5 rounded-md px-1 py-0.5 text-xs text-slate-400 transition-colors hover:text-slate-600 dark:hover:text-slate-300"
+                    className="flex w-full items-center gap-1.5 rounded-md px-1 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
                   >
                     <X className="h-3 w-3" />
                     Clear filters

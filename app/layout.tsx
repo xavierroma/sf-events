@@ -3,6 +3,9 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Figtree } from "next/font/google";
+
+const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL
   ? new URL(process.env.NEXT_PUBLIC_APP_URL)
@@ -52,7 +55,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={figtree.variable}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
