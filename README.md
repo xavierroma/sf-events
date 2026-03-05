@@ -1,29 +1,39 @@
-# Luma Event Explorer (Next.js)
+# SF Bay Area Events
 
-Productionized explorer for SF events with a shared server cache.
+Browse and search all Bay Area events from Luma in one place. No more scrolling the map — Luma hides events behind a mobile-only map view; this app reverse engineers their API and surfaces everything in a searchable, filterable list.
+
+## Features
+
+- Full-text search across event names and descriptions
+- Filter by day and location
+- Live event indicator (pulsing dot) for events happening right now
+- Paginated list, server-rendered for fast loads
+- Daily background refresh from Luma's geo + place feeds
 
 ## Stack
 
-- Next.js App Router (server components + client interactivity)
-- Postgres shared cache
-- Workflow DevKit (`workflow`) for async cache refresh
-- OpenStreetMap + Leaflet for map tab
+- **Next.js 16** — App Router, server components
+- **Postgres** — shared event cache
+- **Tailwind CSS + shadcn/ui** — UI
+- **Bun** — runtime and package manager
 
 ## URL State
 
-- `tab=list|map`
-- `page=<positive int>`
-- `q=<search text>`
+| Param      | Description                                    |
+| ---------- | ---------------------------------------------- |
+| `q`        | Search query                                   |
+| `day`      | Filter by date (`YYYY-MM-DD` or `unscheduled`) |
+| `location` | Filter by city/neighborhood                    |
+| `page`     | Pagination (default: `1`)                      |
 
 ## Data Flow
 
-- UI reads from Postgres only.
-- No public `/api/events` endpoint.
-- Scheduled workflow fetches all pages from:
-  - geo feed (`latitude`, `longitude`)
-  - place feed (`discover_place_api_id`)
-- Results are deduped by `event.api_id` and upserted into cache tables.
-- Newly discovered events trigger an extra detail fetch (`/event/get?event_api_id=...`) with exponential backoff on `403/429` and paced requests to reduce rate limiting.
+- The UI reads exclusively from Postgres — no direct Luma API calls at request time.
+- A daily cron job fetches all pages from two Luma feeds:
+  - **Geo feed** — events near `LUMA_LATITUDE` / `LUMA_LONGITUDE`
+  - **Place feed** — events under `LUMA_DISCOVER_PLACE_ID`
+- Results are deduped by `event.api_id` and upserted into the cache.
+- Newly discovered events trigger a follow-up detail fetch (`/event/get?event_api_id=...`) with paced requests and backoff on `403/429`.
 
 ## Setup
 
@@ -39,13 +49,21 @@ bun install
 cp .env.example .env.local
 ```
 
-3. Run DB migrations:
+Edit `.env.local` — at minimum set `DATABASE_URL` and `CRON_SECRET`. Set `NEXT_PUBLIC_APP_URL` to your production URL for correct OG metadata.
+
+3. Start Postgres (Docker):
+
+```bash
+docker compose up -d
+```
+
+4. Run DB migrations:
 
 ```bash
 bun run db:migrate
 ```
 
-4. Start dev server:
+5. Start dev server:
 
 ```bash
 bun run dev
@@ -53,33 +71,26 @@ bun run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Workflow Triggering
+## Seeding Data
 
-### Cron endpoint
-
-`GET /api/cron/refresh-events`
-
-Requires:
-
-`Authorization: Bearer <CRON_SECRET>`
-
-Optional query param:
-
-- `reason=bootstrap` (otherwise defaults to `cron`)
-
-### One-off bootstrap refresh
+To do an initial pull from Luma:
 
 ```bash
 bun run bootstrap:refresh
 ```
 
-This calls the cron route to enqueue an initial refresh run.
+This calls the cron route locally to populate the database for the first time.
 
-## Vercel Schedule (Hobby)
+## Cron Endpoint
 
-`vercel.json` includes a daily cron:
+```
+GET /api/cron/refresh-events
+Authorization: Bearer <CRON_SECRET>
+```
 
-- `0 0 * * *` -> `/api/cron/refresh-events`
+Optional query param: `reason=bootstrap` (defaults to `cron`).
+
+`vercel.json` schedules this daily at `0 0 * * *`.
 
 ## Validation
 
